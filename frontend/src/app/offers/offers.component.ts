@@ -21,7 +21,7 @@ export class OffersComponent implements OnInit {
       offers => {
         this.offers = offers;
         for (let offer of offers) {
-              offer.viewUrl = environment.djangoRoot + '/offers/'+ offer.slug + '/'+ offer.id;
+              offer.viewUrl = `${environment.djangoRoot}/offers/${offer.slug}/${offer.id}`;
         }
       }
     );

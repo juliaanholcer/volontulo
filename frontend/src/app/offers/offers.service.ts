@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
+import { Offer } from './offers.model';
 import 'rxjs/add/operator/map';
 
 import { environment } from '../../environments/environment';
@@ -14,5 +15,9 @@ export class OffersService {
   getOffers() {
     return this.http.get(this.url, { withCredentials: true } )
       .map((res: Response) => res.json());
+  }
+
+  getDjangoViewUrl(offer: Offer): string {
+    return `${environment.djangoRoot}/offers/${offer.slug}/${offer.id}`;
   }
 }

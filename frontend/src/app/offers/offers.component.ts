@@ -20,10 +20,11 @@ export class OffersComponent implements OnInit {
     .subscribe(
       offers => {
         this.offers = offers;
-        for (let offer of offers) {
-              offer.viewUrl = `${environment.djangoRoot}/offers/${offer.slug}/${offer.id}`;
-        }
       }
     );
+  }
+
+  getDjangoViewUrl(offer: Offer): string {
+    return this.offersService.getDjangoViewUrl(offer);
   }
 }

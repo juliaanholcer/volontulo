@@ -8,5 +8,4 @@ export class Offer {
     finishedAt: string | null;
     title: string;
     url: string;
-    viewUrl: string;
 }

@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { OffersService } from './offers.service';
 import { Offer } from './offers.model';
-import { environment } from '../../environments/environment';
+import { OffersService } from './offers.service';
 
 @Component({
   selector: '<volontulo-offers>',

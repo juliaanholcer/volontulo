@@ -28,7 +28,7 @@ export class LoginComponent {
         if (error.status === 401) {
           this.isAuthFailed = true;
         }
-        return Observable.of(null)
+        return Observable.of(null);
       })
       .subscribe();
   }

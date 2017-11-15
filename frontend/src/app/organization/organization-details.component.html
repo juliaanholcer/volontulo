@@ -1,1 +1,62 @@
-{{ (urlParams | async).organizationId }}
+<div class="container" *ngIf="organization$ | async as organization">
+  {{ organization.id }}
+  <h2>Organizacja</h2>
+  <div class="form-horizontal">
+    <div class="form-group form-group-sm">
+      <label class="col-xs-2 control-label">Nazwa</label>
+      <div class="col-xs-4 form-control-static">
+        <span>{{ organization.name }}</span>
+      </div>
+      <label class="col-xs-2 control-label">Adres</label>
+      <div class="col-xs-4 form-control-static">
+        <span>{{ organization.address }}</span>
+      </div>
+    </div>
+    <div class="form-group form-group-sm">
+      <label class="col-xs-2 control-label">Opis</label>
+      <div class="col-xs-10 form-control-static">
+        {{ organization.description }}
+      </div>
+    </div>
+    <div class="form-group form-group-sm">
+      <div class="col-xs-offset-2 col-xs-10">
+        <a href="/o/organizations/gtrgrtgr/1/edit" class="btn btn-primary">Edytuj organizację</a>
+        <a href="/o/offers/create" class="btn btn-primary">Dodaj ofertę</a>
+      </div>
+    </div>
+  </div>
+  <div class="form-horizontal">
+    <h2>Formularz kontaktowy</h2>
+    <form id="contact_form" class="form-horizontal" method="post" action="/o/organizations/org_org/2" role="form" enctype="multipart/form-data">
+      <input type='hidden' name='csrfmiddlewaretoken' value='a88riagdLgkTZPwhP1ac4pTbhYvbZEvsEWSEbZilEBl7Yv4WPzxYNTpvsaadelaO' />
+      <div class="form-group form-group-sm">
+        <label class="col-xs-3 control-label" for="id_name">Twoje imię i nazwisko</label>
+        <div class="col-xs-9">
+          <input type="text" value="" name="name" class="form-control" id="id_name" />
+        </div>
+      </div>
+      <div class="form-group form-group-sm">
+        <label class="col-xs-3 control-label" for="id_email">Twój email</label>
+        <div class="col-xs-4">
+          <input type="text" value="" name="email" class="form-control" id="id_email" />
+        </div>
+        <label class="col-xs-2 control-label" for="id_phone_no">Telefon</label>
+        <div class="col-xs-3">
+          <input type="text" value="" name="phone_no" class="form-control" id="id_phone_no" />
+        </div>
+      </div>
+      <div class="form-group form-group-sm">
+        <label class="col-xs-3 control-label" for="id_message">Opis</label>
+        <div class="col-xs-9">
+          <textarea name="message" class="form-control" rows="3" id="id_message"></textarea>
+        </div>
+      </div>
+      <div class="form-group form-group-sm">
+        <div class="col-xs-offset-3 col-xs-9">
+          <input type="hidden" value="2" name="organization" />
+          <button type="submit" name="submit" class="btn btn-primary">Wyślij</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

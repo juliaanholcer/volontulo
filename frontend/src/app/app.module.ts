@@ -12,6 +12,7 @@ import { AppComponent } from './app.component';
 import { RedirectComponent } from './redirect.component';
 import { WindowService, WindowFactory } from './window.service';
 import { OffersComponent } from './offers/offers.component'
+import { OrganizationService } from "./organization/organization.service";
 import { OrganizationDetailsComponent } from './organization/organization-details.component';
 import { HomePageComponent } from './home/homepage.component';
 import { FooterComponent } from './footer/footer.component';
@@ -86,6 +87,7 @@ const appRoutes: Routes = [
   ],
   providers: [
     AuthService,
+    OrganizationService,
     { provide: WindowService, useFactory: WindowFactory },
     { provide: ErrorHandler, useClass: RavenErrorHandler }
   ],

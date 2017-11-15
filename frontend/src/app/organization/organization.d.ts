@@ -3,4 +3,6 @@ interface Organization {
   slug: string;
   name: string;
   url: string;
+  address: string;
+  description: string;
 }

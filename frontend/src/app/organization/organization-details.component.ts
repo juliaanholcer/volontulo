@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {Observable} from "rxjs/Observable";
+import { Observable } from "rxjs/Observable";
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/map';
+
+import { OrganizationService } from "./organization.service";
 
 @Component({
   selector: 'volontulo-organization-details',
@@ -9,13 +13,16 @@ import {Observable} from "rxjs/Observable";
 export class OrganizationDetailsComponent implements OnInit {
 
   urlParams: Observable<any>;
+  organization$: Observable<Organization>;
 
   constructor(
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private organizationService: OrganizationService
   ) { }
 
   ngOnInit() {
-    this.urlParams = this.activatedRoute.params;
+    this.organization$ = this.activatedRoute.params
+      .switchMap(params => this.organizationService.getOrganization(params.organizationId));
   }
 
 }

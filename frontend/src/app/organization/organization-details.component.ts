@@ -8,7 +8,8 @@ import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'volontulo-organization-details',
-  templateUrl: './organization-details.component.html'
+  templateUrl: './organization-details.component.html',
+  styleUrls: ['./organization-details.component.css'],
 })
 export class OrganizationDetailsComponent implements OnInit {
 
@@ -22,7 +23,6 @@ export class OrganizationDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.organization$ = this.activatedRoute.params
-      .switchMap(params => this.organizationService.getOrganization(params.organizationId));
+      .switchMap(params => this.organizationService.getOrganization(+params.organizationId));
   }
-
 }

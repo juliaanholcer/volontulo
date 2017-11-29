@@ -14,24 +14,27 @@ import { User } from '../user';
   styleUrls: ['./organization-details.component.css'],
 })
 export class OrganizationDetailsComponent implements OnInit {
-  //currentUser: User;
+  currentUser: User;
   organization$: Observable<Organization>;
   djangoRoot: string = environment.djangoRoot;
+  isUserOrgMember$: Observable<boolean>;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private organizationService: OrganizationService,
-    //private authService: AuthService,
+    private authService: AuthService,
   ) {
-    //this.authService.changeUserEvent
-    //  .subscribe(user => { this.currentUser = user; }
-    //  );
-    //this.currentUser = this.authService.currentUser();
+    this.authService.changeUserEvent
+      .subscribe(user => { this.currentUser = user; }
+      );
   }
 
   ngOnInit() {
-    //console.log(this.currentUser.username);
     this.organization$ = this.activatedRoute.params
       .switchMap(params => this.organizationService.getOrganization(params.organizationId));
+    this.isUserOrgMember$ = this.organization$
+      .map(organization => this.currentUser.organizations
+        .filter(org => org.id === organization.id).length > 0
+      );
   }
 }

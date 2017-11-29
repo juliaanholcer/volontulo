@@ -11,9 +11,9 @@ import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { RedirectComponent } from './redirect.component';
 import { WindowService, WindowFactory } from './window.service';
-import { OffersComponent } from './offers/offers.component';
 import { OrganizationService } from './organization/organization.service';
 import { OrganizationDetailsComponent } from './organization/organization-details.component';
+import { HomepageOfferComponent } from './homepage-offer/homepage-offer.component';
 import { HomePageComponent } from './home/homepage.component';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
@@ -36,17 +36,14 @@ const appRoutes: Routes = [
     path: '',
     component: HomePageComponent
   },
-
   {
     path: 'organizations/:organizationSlug/:organizationId',
     component: OrganizationDetailsComponent
   },
-
   {
     path: 'login',
     component: LoginComponent,
   },
-
   {
     path: 'o-nas',
     component: AboutUsComponent
@@ -55,7 +52,6 @@ const appRoutes: Routes = [
     path: 'regulations',
     component: RegulationsComponent
   },
-
   {
     path: '**',
     component: RedirectComponent
@@ -69,8 +65,8 @@ const appRoutes: Routes = [
     HomePageComponent,
     HeaderComponent,
     FooterComponent,
-    OffersComponent,
     OrganizationDetailsComponent,
+    HomepageOfferComponent,
     CookieLawBannerComponent,
     AboutUsComponent,
     RegulationsComponent,

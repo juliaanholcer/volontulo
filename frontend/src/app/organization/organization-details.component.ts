@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap';
 
+import { Organization } from './organization.model';
 import { OrganizationService } from './organization.service';
 import { environment } from '../../environments/environment';
 import { AuthService } from '../auth.service';
@@ -23,13 +24,12 @@ export class OrganizationDetailsComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private organizationService: OrganizationService,
     private authService: AuthService,
-  ) {
+  ) {}
+
+  ngOnInit() {
     this.authService.changeUserEvent
       .subscribe(user => { this.currentUser = user; }
       );
-  }
-
-  ngOnInit() {
     this.organization$ = this.activatedRoute.params
       .switchMap(params => this.organizationService.getOrganization(params.organizationId));
     this.isUserOrgMember$ = this.organization$

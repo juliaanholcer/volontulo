@@ -11,12 +11,36 @@ from rest_framework import serializers
 from apps.volontulo import models
 
 
+class OrganizationSerializer(serializers.HyperlinkedModelSerializer):
+
+    """REST API organizations serializer."""
+
+    slug = serializers.SerializerMethodField()
+
+    class Meta:
+        model = models.Organization
+        fields = (
+            'id',
+            'name',
+            'slug',
+            'url',
+            'address',
+            'description',
+        )
+
+    @staticmethod
+    def get_slug(obj):
+        """Returns slugified name."""
+        return slugify(obj.name)
+
+
 class OfferSerializer(serializers.HyperlinkedModelSerializer):
 
     """REST API offers serializer."""
 
     slug = serializers.SerializerMethodField()
     image = serializers.SerializerMethodField()
+    organization = OrganizationSerializer(many=False, read_only=True)
 
     class Meta:
         model = models.Offer
@@ -57,12 +81,12 @@ class OrganizationSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = models.Organization
         fields = (
+            'address',
+            'description',
             'id',
             'name',
             'slug',
             'url',
-            'address',
-            'description',
         )
 
     @staticmethod

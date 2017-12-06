@@ -1,25 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/combineLatest';
+import 'rxjs/add/operator/switchMap';
 
 import { Organization } from './organization.model';
 import { OrganizationService } from './organization.service';
-import { environment } from '../../environments/environment';
 import { AuthService } from '../auth.service';
 import { User } from '../user';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'volontulo-organization-details',
   templateUrl: './organization-details.component.html',
   styleUrls: ['./organization-details.component.css'],
 })
+
 export class OrganizationDetailsComponent implements OnInit {
-  user$: Observable<User | null>;
-  organization$: Observable<Organization>;
   djangoRoot: string = environment.djangoRoot;
   isUserOrgMember$: Observable<boolean>;
+  organization$: Observable<Organization>;
+  user$: Observable<User | null>;
 
   constructor(
     private activatedRoute: ActivatedRoute,

@@ -1,11 +1,11 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 
 import { environment } from '../environments/environment';
 import { User } from './user.d';
-import {BehaviorSubject} from "rxjs/BehaviorSubject";
 
 @Injectable()
 export class AuthService {

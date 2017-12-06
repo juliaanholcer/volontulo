@@ -38,12 +38,16 @@ def login_view(request):
         login(request, user)
 
         return Response(
-            serializers.UserSerializer(user, context={'request': request}).data,
+            serializers.UserSerializer(user, context={
+                'request': request
+            }).data,
             status=status.HTTP_200_OK,
         )
 
     return Response(
-        serializers.UserSerializer(request.user, context={'request': request}).data,
+        serializers.UserSerializer(request.user, context={
+            'request': request
+        }).data,
         status=status.HTTP_400_BAD_REQUEST,
     )
 

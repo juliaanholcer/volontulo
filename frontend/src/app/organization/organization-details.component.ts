@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/combineLatest';
 
 import { Organization } from './organization.model';
 import { OrganizationService } from './organization.service';
@@ -15,7 +16,7 @@ import { User } from '../user';
   styleUrls: ['./organization-details.component.css'],
 })
 export class OrganizationDetailsComponent implements OnInit {
-  currentUser: User;
+  user$: Observable<User | null>;
   organization$: Observable<Organization>;
   djangoRoot: string = environment.djangoRoot;
   isUserOrgMember$: Observable<boolean>;
@@ -27,14 +28,14 @@ export class OrganizationDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.authService.changeUserEvent
-      .subscribe(user => { this.currentUser = user; }
-      );
+    this.user$ = this.authService.user$;
+
     this.organization$ = this.activatedRoute.params
       .switchMap(params => this.organizationService.getOrganization(params.organizationId));
+
     this.isUserOrgMember$ = this.organization$
-      .map(organization => this.currentUser.organizations
-        .filter(org => org.id === organization.id).length > 0
-      );
+      .combineLatest(this.user$, (org, user) => {
+        return user.organizations.filter(organ => org.id === organ.id).length > 0;
+      });
   }
 }

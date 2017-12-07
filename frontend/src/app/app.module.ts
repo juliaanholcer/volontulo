@@ -9,6 +9,7 @@ import * as Raven from 'raven-js';
 
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
+
 import { RedirectComponent } from './redirect.component';
 import { WindowService, WindowFactory } from './window.service';
 import { HomepageOfferComponent } from './homepage-offer/homepage-offer.component';
@@ -21,6 +22,7 @@ import { RegulationsComponent } from './static/regulations.component';
 import { LoginComponent } from './login/login.component';
 import { AuthService } from './auth.service';
 import { BannerComponent } from './banner/banner.component';
+import { FaqOrganizationsComponent } from './static/faq-organizations.component';
 
 Raven.config(environment.sentryDSN).install();
 
@@ -34,6 +36,10 @@ const appRoutes: Routes = [
   {
     path: '',
     component: HomePageComponent
+  },
+  {
+    path: 'faq-organizations',
+    component: FaqOrganizationsComponent,
   },
   {
     path: 'o-nas',
@@ -65,7 +71,8 @@ const appRoutes: Routes = [
     AboutUsComponent,
     RegulationsComponent,
     LoginComponent,
-    BannerComponent
+    BannerComponent,
+    FaqOrganizationsComponent,
   ],
   imports: [
     BrowserModule,

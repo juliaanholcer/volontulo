@@ -68,7 +68,9 @@ def current_user(request):
     """REST API view for current user."""
     if request.user.is_authenticated():
         return Response(
-            serializers.UserSerializer(request.user, context={'request': request}).data,
+            serializers.UserSerializer(request.user, context={
+                'request': request
+            }).data,
             status=status.HTTP_200_OK,
         )
 

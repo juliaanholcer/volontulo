@@ -82,7 +82,6 @@ const appRoutes: Routes = [
     IconComponent,
     IconLabelComponent,
     BannerComponent,
-    BannerComponent,
     FaqOrganizationsComponent,
   ],
   imports: [

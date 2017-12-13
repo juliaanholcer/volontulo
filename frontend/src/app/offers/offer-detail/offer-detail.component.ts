@@ -24,7 +24,12 @@ export class OfferDetailComponent implements OnInit {
 
   ngOnInit() {
     this.offer$ = this.activatedRoute.params
-    .switchMap(params => this.offersService.getOffer(params.offerId));
+    .switchMap(params => this.offersService.getOffer(params.offerId))
+    .map(offer$ => {
+      if (offer$.image === null) {
+        offer$.image = `../../assets/img/offer/offer_${Math.round(Math.random() * 3) + 1}.jpg`;
+      }
+      return offer$;
+    });
   }
-
 }

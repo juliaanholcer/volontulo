@@ -1,0 +1,42 @@
+<div class="container">
+  <div class="container">
+    <h2 class="display-4">Formularz kontaktowy</h2>
+    <form id="contact_form"
+          method="post"
+          action=""
+          role="form"
+          enctype="multipart/form-data">
+      <input type='hidden'
+               name='csrfmiddlewaretoken'
+               value='1aZkwlt8wm33RmB2ZNH9j61sPjeNZYM4C17GDud6d9B3az5UwLn96VClyF6E0eRb' />
+      <div class="form-group row">
+        <label for="id_name" class="col-md-3 col-form-label">Twoje imię i nazwisko</label>
+        <div class="col-md-9">
+          <input type="text" value="" name="name" class="form-control form-control-lg" id="id_name" />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label" for="id_email">Twój email</label>
+        <div class="col-md-4">
+          <input type="email" value="" name="email" class="form-control form-control-lg" id="id_email" />
+        </div>
+        <label class="col-md-2 col-form-label" for="id_phone_no">Telefon</label>
+        <div class="col-md-3">
+          <input type="tel" value="" name="phone_no" class="form-control form-control-lg" id="id_phone_no" />
+        </div>
+      </div>
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label" for="id_message">Opis</label>
+          <div class="col-md-9">
+            <textarea name="message" class="form-control" rows="5" id="id_message" wrap="hard"></textarea>
+          </div>
+        </div>
+      <div class="form-group row">
+        <div class="col-md-9 offset-md-3">
+          <input type="hidden" value="2" name="organization" />
+          <button type="submit" name="submit" class="btn btn-primary">Wyślij</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

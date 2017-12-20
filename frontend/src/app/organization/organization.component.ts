@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/combineLatest';
-import 'rxjs/add/operator/switchMap';
 
 import { Organization } from './organization.model';
 import { OrganizationService } from './organization.service';
@@ -11,12 +9,11 @@ import { User } from '../user';
 import { environment } from '../../environments/environment';
 
 @Component({
-  selector: 'volontulo-organization-details',
-  templateUrl: './organization-details.component.html',
-  styleUrls: ['./organization-details.component.css'],
+  selector: 'volontulo-organization',
+  templateUrl: './organization.component.html',
+  styleUrls: ['./organization.component.css']
 })
-
-export class OrganizationDetailsComponent implements OnInit {
+export class OrganizationComponent implements OnInit {
   djangoRoot: string = environment.djangoRoot;
   isUserOrgMember$: Observable<boolean>;
   organization$: Observable<Organization>;
@@ -38,5 +35,6 @@ export class OrganizationDetailsComponent implements OnInit {
       .combineLatest(this.user$, (org, user) => {
         return user.organizations.filter(organ => org.id === organ.id).length > 0;
       });
+    console.log(this.isUserOrgMember$);
   }
 }

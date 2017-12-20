@@ -1,0 +1,8 @@
+<volontulo-organization-details
+  [organization$]="organization$"
+  [isUserOrgMember$]="isUserOrgMember$"
+  [djangoRoot]="djangoRoot">
+</volontulo-organization-details>
+<volontulo-organization-contact *ngIf="!(isUserOrgMember$ | async)">
+</volontulo-organization-contact>
+

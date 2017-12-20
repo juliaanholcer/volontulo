@@ -1,17 +1,16 @@
 <div class="container container-fluid" *ngIf="organization$ | async as organization">
-  <div>{{test}}</div>
   <h2 class="display-4">Organizacja</h2>
-    <dl class="row">
-      <dt class="col-md-2">Nazwa</dt>
-      <dd class="col-md-4">
+    <dl class="row offset-md-1">
+      <dt class="col-md-1">Nazwa</dt>
+      <dd class="col-md-5">
         <span>{{ organization.name }}</span>
       </dd>
-      <dt class="col-md-2">Adres</dt>
-      <dd class="col-md-4">
+      <dt class="col-md-1">Adres</dt>
+      <dd class="col-md-5">
         <address>{{ organization.address }}</address>
       </dd>
-      <dt class="col-md-2">Opis</dt>
-      <dd class="col-md-10">
+      <dt class="col-md-1">Opis</dt>
+      <dd class="col-md-11">
         {{ organization.description }}
       </dd>
     </dl>

@@ -40,6 +40,6 @@ export class OrganizationComponent implements OnInit {
           return false;
         }
         return user.organizations.filter(organ => org.id === organ.id).length > 0;
-      })
+      });
   }
 }

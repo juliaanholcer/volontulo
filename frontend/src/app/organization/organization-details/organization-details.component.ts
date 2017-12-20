@@ -18,9 +18,8 @@ import { environment } from '../../../environments/environment';
 
 export class OrganizationDetailsComponent implements OnInit {
   @Input() djangoRoot: string;
-    // = environment.djangoRoot;
-  @Input() isUserOrgMember$: Observable<boolean>;
-  @Input() organization$: Observable<Organization>;
+  @Input() isUserOrgMember: boolean;
+  @Input() organization: Organization;
   // user$: Observable<User | null>;
 
   constructor(

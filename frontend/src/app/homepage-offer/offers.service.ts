@@ -18,8 +18,14 @@ export class OffersService {
   }
 
   getOffer(id: number): Observable<Offer> {
-    return this.http.get(`${this.url}${id}/`, { withCredentials: true } )
-      .map((res: Response) => res.json());
+    return this.http.get(`${this.url}${id}/`, { withCredentials: true })
+      .map((res: Response) => res.json())
+      .map(offer$ => {
+      if (offer$.image === null) {
+        offer$.image = 'assets/img/banner/volontulo_baner.png';
+      }
+      return offer$;
+    });
   }
 
   getOfferViewUrl(offer: Offer): string {

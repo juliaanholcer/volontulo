@@ -3,5 +3,7 @@
   [isUserOrgMember]="isUserOrgMember$ | async"
   [djangoRoot]="djangoRoot">
 </volontulo-organization-details>
-<volontulo-organization-contact *ngIf="!(isUserOrgMember$ | async)">
+<volontulo-organization-contact
+  *ngIf="!(isUserOrgMember$ | async)"
+  (contact)="onContact($event)">
 </volontulo-organization-contact>

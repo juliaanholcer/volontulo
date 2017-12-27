@@ -42,4 +42,7 @@ export class OrganizationComponent implements OnInit {
         return user.organizations.filter(organ => org.id === organ.id).length > 0;
       });
   }
+  onContact(contactMessage) {
+    // console.log(contactMessage);
+  }
 }

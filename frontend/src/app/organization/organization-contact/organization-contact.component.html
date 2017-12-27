@@ -1,31 +1,69 @@
 <div class="container">
   <div class="container">
     <h2 class="display-4">Formularz kontaktowy</h2>
-    <form id="contact_form"
-          method="post"
-          action=""
-          role="form"
-          enctype="multipart/form-data">
+    <form (ngSubmit)="onSubmit()" #contactForm="ngForm">
       <div class="form-group row">
         <label for="id_name" class="col-md-3 col-form-label">Twoje imię i nazwisko</label>
         <div class="col-md-9">
-          <input type="text" value="" name="name" class="form-control form-control-lg" id="id_name" />
+          <input
+            type="text"
+            name="name"
+            class="form-control form-control-lg"
+            id="id_name"
+            ngModel
+            required
+            #name="ngModel" />
+          <span
+            class="help-block"
+            *ngIf="name.invalid && name.touched">Proszę podać imię i nazwisko.</span>
         </div>
       </div>
       <div class="form-group row">
         <label class="col-md-3 col-form-label" for="id_email">Twój email</label>
         <div class="col-md-4">
-          <input type="email" value="" name="email" class="form-control form-control-lg" id="id_email" />
+          <input
+            type="email"
+            name="email"
+            class="form-control form-control-lg"
+            id="id_email"
+            ngModel
+            required
+            email
+            #email="ngModel" />
+          <span
+            class="help-block"
+            *ngIf="email.invalid && email.touched">Proszę podać adres email w poprawnym formacie.</span>
         </div>
         <label class="col-md-2 col-form-label" for="id_phone_no">Telefon</label>
         <div class="col-md-3">
-          <input type="tel" value="" name="phone_no" class="form-control form-control-lg" id="id_phone_no" />
+          <input
+            type="tel"
+            name="phone_no"
+            class="form-control form-control-lg"
+            id="id_phone_no"
+            ngModel
+            required
+            #phoneNo="ngModel" />
+          <span
+            class="help-block"
+            *ngIf="phoneNo.invalid && phoneNo.touched">Proszę podać numer telefonu.</span>
         </div>
       </div>
         <div class="form-group row">
           <label class="col-md-3 col-form-label" for="id_message">Opis</label>
           <div class="col-md-9">
-            <textarea name="message" class="form-control" rows="5" id="id_message" wrap="hard"></textarea>
+            <textarea
+              name="message"
+              class="form-control"
+              rows="5"
+              id="id_message"
+              ngModel
+              required
+              #message="ngModel">
+            </textarea>
+            <span
+            class="help-block"
+            *ngIf="message.invalid && message.touched">Wiadomość nie może być pusta.</span>
           </div>
         </div>
       <div class="form-group row">

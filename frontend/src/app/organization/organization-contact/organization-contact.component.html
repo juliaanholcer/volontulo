@@ -9,13 +9,14 @@
             type="text"
             name="name"
             class="form-control form-control-lg"
+            [ngClass]="{'is-invalid': name.invalid && name.touched}"
             id="id_name"
             ngModel
             required
             #name="ngModel" />
-          <span
-            class="help-block"
-            *ngIf="name.invalid && name.touched">Proszę podać imię i nazwisko.</span>
+          <div
+            class="invalid-feedback"
+            *ngIf="name.invalid && name.touched">Proszę podać imię i nazwisko.</div>
         </div>
       </div>
       <div class="form-group row">
@@ -25,14 +26,15 @@
             type="email"
             name="email"
             class="form-control form-control-lg"
+            [ngClass]="{'is-invalid': email.invalid && email.touched}"
             id="id_email"
             ngModel
             required
             email
             #email="ngModel" />
-          <span
-            class="help-block"
-            *ngIf="email.invalid && email.touched">Proszę podać adres email w poprawnym formacie.</span>
+          <div
+            class="invalid-feedback"
+            *ngIf="email.invalid && email.touched">Proszę podać adres email w poprawnym formacie.</div>
         </div>
         <label class="col-md-2 col-form-label" for="id_phone_no">Telefon</label>
         <div class="col-md-3">
@@ -40,13 +42,14 @@
             type="tel"
             name="phone_no"
             class="form-control form-control-lg"
+            [ngClass]="{'is-invalid': phoneNo.invalid && phoneNo.touched}"
             id="id_phone_no"
             ngModel
             required
             #phoneNo="ngModel" />
-          <span
-            class="help-block"
-            *ngIf="phoneNo.invalid && phoneNo.touched">Proszę podać numer telefonu.</span>
+          <div
+            class="invalid-feedback"
+            *ngIf="phoneNo.invalid && phoneNo.touched">Proszę podać numer telefonu.</div>
         </div>
       </div>
         <div class="form-group row">
@@ -55,21 +58,27 @@
             <textarea
               name="message"
               class="form-control"
+              [ngClass]="{'is-invalid': message.invalid && message.touched}"
               rows="5"
               id="id_message"
               ngModel
               required
               #message="ngModel">
             </textarea>
-            <span
-            class="help-block"
-            *ngIf="message.invalid && message.touched">Wiadomość nie może być pusta.</span>
+            <div
+            class="invalid-feedback"
+            *ngIf="message.invalid && message.touched">Wiadomość nie może być pusta.</div>
           </div>
         </div>
       <div class="form-group row">
         <div class="col-md-9 offset-md-3">
-          <input type="hidden" value="2" name="organization" />
-          <button type="submit" name="submit" class="btn btn-primary">Wyślij</button>
+          <button
+            type="submit"
+            name="submit"
+            class="btn btn-primary"
+            [disabled]="contactForm.invalid">
+            Wyślij
+          </button>
         </div>
       </div>
     </form>

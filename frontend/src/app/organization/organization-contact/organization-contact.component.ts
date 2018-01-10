@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { OrganizationContactPayload } from '../organization.model';
 
@@ -10,6 +10,8 @@ import { OrganizationContactPayload } from '../organization.model';
 export class OrganizationContactComponent implements OnInit {
   @ViewChild('contactForm') contactForm: NgForm;
   @Output() contact = new EventEmitter<OrganizationContactPayload>();
+  @Input() contactStatus: Number;
+
   constructor() { }
 
   ngOnInit() {
@@ -21,5 +23,8 @@ export class OrganizationContactComponent implements OnInit {
       phone_no: this.contactForm.value.phone_no,
       message: this.contactForm.value.message,
     });
+    if (this.contactStatus === 201) {
+      this.contactForm.reset();
+    }
   }
 }

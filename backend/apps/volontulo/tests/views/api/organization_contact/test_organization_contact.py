@@ -32,7 +32,7 @@ class TestOrganizationContact(TestCase):
             '/api/organizations/org/{}/contact'.format(self.org.id))
         self.assertEquals(res.status_code, 405)
 
-    def test_200(self):
+    def test_201(self):
         res = self.client.post(
             '/api/organizations/org/{}/contact'.format(self.org.id),
             json.dumps({
@@ -43,7 +43,7 @@ class TestOrganizationContact(TestCase):
             }),
             content_type='application/json'
         )
-        self.assertEquals(res.status_code, 200)
+        self.assertEquals(res.status_code, 201)
 
     def test_send_email(self):
         with mock.patch('apps.volontulo.views.api.send_mail') as mock_send:
@@ -58,5 +58,5 @@ class TestOrganizationContact(TestCase):
                 content_type='application/json'
             )
 
-        self.assertEquals(res.status_code, 200)
+        self.assertEquals(res.status_code, 201)
         self.assertEquals(mock_send.call_count, 1)

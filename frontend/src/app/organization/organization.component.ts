@@ -20,6 +20,7 @@ export class OrganizationComponent implements OnInit {
   isUserOrgMember$: Observable<boolean>;
   user$: Observable<User | null>;
   organization$: Observable<Organization>;
+  contactStatus$: Observable<number>;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -46,6 +47,7 @@ export class OrganizationComponent implements OnInit {
   onContact(organizationContact: OrganizationContactPayload) {
     let organization: Organization;
     this.organization$.take(1).subscribe(org => organization = org);
-    this.organizationService.sendContactForm(organization, organizationContact).subscribe();
+    this.contactStatus$ = this.organizationService.sendContactForm(organization, organizationContact)
+      .map(resp => resp.status);
   }
 }

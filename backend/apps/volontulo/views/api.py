@@ -120,4 +120,4 @@ def organization_contact(request, slug, id_):  # pylint: disable=unused-argument
         ],
         serializer.validated_data,
     )
-    return Response(data=True, status=200)
+    return Response(data=True, status=status.HTTP_201_CREATED)

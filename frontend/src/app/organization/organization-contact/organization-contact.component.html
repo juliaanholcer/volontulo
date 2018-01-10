@@ -13,6 +13,8 @@
             id="id_name"
             ngModel
             required
+            minlength="2"
+            maxlength="150"
             #name="ngModel" />
           <div
             class="invalid-feedback"
@@ -30,6 +32,7 @@
             id="id_email"
             ngModel
             required
+            maxlength="150"
             email
             #email="ngModel" />
           <div
@@ -46,6 +49,8 @@
             id="id_phone_no"
             ngModel
             required
+            minlength="9"
+            maxlength="15"
             #phoneNo="ngModel" />
           <div
             class="invalid-feedback"

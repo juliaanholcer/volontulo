@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/combineLatest';
+import 'rxjs/add/operator/take';
 
-import { Organization } from './organization.model';
+import { Organization, OrganizationContactPayload } from './organization.model';
 import { OrganizationService } from './organization.service';
 import { AuthService } from '../auth.service';
 import { User } from '../user';
@@ -42,7 +43,9 @@ export class OrganizationComponent implements OnInit {
         return user.organizations.filter(organ => org.id === organ.id).length > 0;
       });
   }
-  onContact(contactMessage) {
-    // console.log(contactMessage);
+  onContact(organizationContact: OrganizationContactPayload) {
+    let organization: Organization;
+    this.organization$.take(1).subscribe(org => organization = org);
+    this.organizationService.sendContactForm(organization, organizationContact).subscribe();
   }
 }

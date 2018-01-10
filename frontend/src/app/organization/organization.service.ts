@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/map';
 
 import { environment } from '../../environments/environment';
-import { Organization } from './organization.model';
+import { Organization, OrganizationContactPayload } from './organization.model';
 
 @Injectable()
 export class OrganizationService {
@@ -13,6 +13,7 @@ export class OrganizationService {
   requestOptions = { withCredentials: true };
   private _organization$ = new BehaviorSubject<Organization>(null);
   public organization$ = this._organization$.asObservable();
+
 
   constructor(private http: Http) {
   }
@@ -22,6 +23,12 @@ export class OrganizationService {
       this._organization$.next(response.json());
       return response.json();
     });
+  }
+
+  sendContactForm(organization: Organization, contactData: OrganizationContactPayload): Observable<any> {
+    return this.http.post(
+      `${environment.apiRoot}/organizations/${organization.slug}/${organization.id}/contact`,
+      contactData);
   }
 
   getOrganizationViewUrl(organization: Organization): string {

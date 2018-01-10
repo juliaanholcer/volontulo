@@ -21,6 +21,7 @@ backend:
     VOLONTULO_SECRET_KEY: a63eb5ef-3b25-4595-846a-5d97d99486f0
     VOLONTULO_DB_HOST: db
     VOLONTULO_DB_PASS: volontulo
+    PYTHONUNBUFFERED: 1
   ports:
     - 8000:8000
   links:

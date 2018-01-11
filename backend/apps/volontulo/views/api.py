@@ -106,7 +106,8 @@ class OrganizationViewSet(viewsets.ModelViewSet):
 
 @api_view(['POST'])
 @permission_classes((AllowAny,))
-def organization_contact(request, slug, id_):  # pylint: disable=unused-argument
+# pylint: disable=unused-argument
+def organization_contact(request, slug, id_):
     """Endpoint to send contact message to organization"""
     org = get_object_or_404(Organization, id=id_)
     serializer = OrganizationContact(data=request.data)

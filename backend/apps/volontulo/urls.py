@@ -13,7 +13,6 @@ from apps.volontulo.views import api as api_views
 from apps.volontulo.views import auth as auth_views
 from apps.volontulo.views import offers as offers_views
 from apps.volontulo.views import organizations as orgs_views
-from apps.volontulo.views.api import organization_contact
 
 router = DefaultRouter()
 router.register(r'offers', api_views.OfferViewSet, base_name='offer')
@@ -42,11 +41,6 @@ urlpatterns = [
         r'^api/current-user',
         api_views.current_user,
         name='current_user'
-    ),
-    url(
-        r'^api/organizations/(?P<slug>[\w-]+)/(?P<id_>[0-9]+)/contact$',
-        organization_contact,
-        name='organization_contact'
     ),
 
     # homepage:

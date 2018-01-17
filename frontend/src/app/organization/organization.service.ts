@@ -29,7 +29,7 @@ export class OrganizationService {
 
   sendContactForm(organization: Organization, contactData: OrganizationContactPayload) {
     return this.http.post(
-      `${environment.apiRoot}/organizations/${organization.slug}/${organization.id}/contact`,
+      `${environment.apiRoot}/organizations/${organization.id}/contact/`,
       contactData)
       .map(response => {
         if (response.status === 201) {

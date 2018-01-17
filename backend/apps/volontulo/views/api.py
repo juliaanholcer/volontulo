@@ -9,7 +9,7 @@ from django.contrib.auth import login
 from django.contrib.auth import logout
 from django.shortcuts import get_object_or_404
 from rest_framework import status
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, detail_route
 from rest_framework.decorators import authentication_classes
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import AllowAny
@@ -103,22 +103,19 @@ class OrganizationViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.OrganizationSerializer
     permission_classes = (permissions.OrganizationPermission,)
 
-
-@api_view(['POST'])
-@permission_classes((AllowAny,))
-# pylint: disable=unused-argument
-def organization_contact(request, slug, id_):
-    """Endpoint to send contact message to organization"""
-    org = get_object_or_404(Organization, id=id_)
-    serializer = OrganizationContact(data=request.data)
-    serializer.is_valid(raise_exception=True)
-    send_mail(
-        request,
-        'volunteer_to_organisation',
-        [
-            user_profile.user.email
-            for user_profile in org.userprofiles.all()
-        ],
-        serializer.validated_data,
-    )
-    return Response(data=True, status=status.HTTP_201_CREATED)
+    @detail_route(methods=['POST'], permission_classes=(AllowAny,))
+    def contact(self, request, pk):
+        """Endpoint to send contact message to organization"""
+        org = get_object_or_404(Organization, id=pk)
+        serializer = OrganizationContact(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        send_mail(
+            request,
+            'volunteer_to_organisation',
+            [
+                user_profile.user.email
+                for user_profile in org.userprofiles.all()
+            ],
+            serializer.validated_data,
+        )
+        return Response(data=True, status=status.HTTP_201_CREATED)

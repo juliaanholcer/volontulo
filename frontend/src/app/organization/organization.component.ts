@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/combineLatest';
@@ -13,14 +13,15 @@ import { environment } from '../../environments/environment';
 @Component({
   selector: 'volontulo-organization',
   templateUrl: './organization.component.html',
-  styleUrls: ['./organization.component.css']
+  styleUrls: ['./organization.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OrganizationComponent implements OnInit {
   djangoRoot: string = environment.djangoRoot;
   isUserOrgMember$: Observable<boolean>;
   user$: Observable<User | null>;
   organization$: Observable<Organization>;
-  contactStatus$: Observable<number>;
+  contactStatus$: Observable<string>;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -47,7 +48,6 @@ export class OrganizationComponent implements OnInit {
   onContact(organizationContact: OrganizationContactPayload) {
     let organization: Organization;
     this.organization$.take(1).subscribe(org => organization = org);
-    this.contactStatus$ = this.organizationService.sendContactForm(organization, organizationContact)
-      .map(resp => resp.status);
+    this.contactStatus$ = this.organizationService.sendContactForm(organization, organizationContact);
   }
 }

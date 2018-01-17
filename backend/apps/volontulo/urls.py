@@ -46,6 +46,11 @@ urlpatterns = [
         api_views.current_user,
         name='current_user'
     ),
+    url(
+        r'^api/organizations/(?P<slug>[\w-]+)/(?P<id_>[0-9]+)/contact$',
+        organization_contact,
+        name='organization_contact'
+    ),
 
     # homepage:
     url(r'^o$', views.homepage, name='homepage'),
@@ -145,11 +150,6 @@ urlpatterns = [
         name='organization_form'
     ),
     # organizations/filter
-    url(
-        r'^api/organizations/(?P<slug>[\w-]+)/(?P<id_>[0-9]+)/contact$',
-        organization_contact,
-        name='organization_contact'
-    ),
 
     # pages:
     url(

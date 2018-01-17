@@ -13,8 +13,8 @@ export class OrganizationDetailsComponent implements OnInit {
   @Input() isUserOrgMember: boolean;
   @Input() organization: Organization;
 
-  constructor() {}
+  constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
+
 }

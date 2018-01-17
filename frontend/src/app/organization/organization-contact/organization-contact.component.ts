@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { OrganizationContactPayload } from '../organization.model';
 
@@ -7,24 +7,21 @@ import { OrganizationContactPayload } from '../organization.model';
   templateUrl: './organization-contact.component.html',
   styleUrls: ['./organization-contact.component.css']
 })
-export class OrganizationContactComponent implements OnInit {
+export class OrganizationContactComponent implements OnChanges {
   @ViewChild('contactForm') contactForm: NgForm;
   @Output() contact = new EventEmitter<OrganizationContactPayload>();
-  @Input() contactStatus: Number;
+  @Input() contactStatus: string;
+  submitDisabled = false;
 
-  constructor() { }
-
-  ngOnInit() {
-  }
-  onSubmit() {
-    this.contact.emit({
-      name: this.contactForm.value.name,
-      email: this.contactForm.value.email,
-      phone_no: this.contactForm.value.phone_no,
-      message: this.contactForm.value.message,
-    });
-    if (this.contactStatus === 201) {
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.contactStatus.currentValue === 'success') {
       this.contactForm.reset();
     }
+    this.submitDisabled = false;
+  }
+
+  onSubmit() {
+    this.contact.emit(this.contactForm.value as OrganizationContactPayload);
+    this.submitDisabled = true;
   }
 }

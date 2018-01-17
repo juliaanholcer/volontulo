@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
+
 
 import { environment } from '../../environments/environment';
 import { Organization, OrganizationContactPayload } from './organization.model';
@@ -25,10 +27,15 @@ export class OrganizationService {
     });
   }
 
-  sendContactForm(organization: Organization, contactData: OrganizationContactPayload): Observable<any> {
+  sendContactForm(organization: Organization, contactData: OrganizationContactPayload) {
     return this.http.post(
       `${environment.apiRoot}/organizations/${organization.slug}/${organization.id}/contact`,
-      contactData);
+      contactData)
+      .map(response => {
+        if (response.status === 201) {
+          return 'success';
+        }
+      }).catch(err => Observable.of('error'));
   }
 
   getOrganizationViewUrl(organization: Organization): string {

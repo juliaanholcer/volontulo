@@ -1,0 +1,9 @@
+label {
+  font-weight: 700;
+  text-align: right;
+}
+@media (max-width: 767.99px) {
+  label {
+    text-align: left;
+  }
+}

@@ -10,12 +10,12 @@ import { OffersService } from '../../homepage-offer/offers.service';
 @Component({
   selector: 'volontulo-offer-detail',
   templateUrl: './offer-detail.component.html',
-  styleUrls: ['./offer-detail.component.css'],
+  styleUrls: ['./offer-detail.component.scss'],
 })
 export class OfferDetailComponent implements OnInit {
   public offer$: Observable<Offer>;
   public djangoRoot = environment.djangoRoot;
-  public getOfferViewUrl = this.offersService.getOfferViewUrl;
+  public getJoinViewUrl = this.offersService.getJoinViewUrl;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -26,5 +26,4 @@ export class OfferDetailComponent implements OnInit {
     this.offer$ = this.activatedRoute.params
     .switchMap(params => this.offersService.getOffer(params.offerId));
   }
-
 }

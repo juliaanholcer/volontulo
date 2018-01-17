@@ -5,7 +5,7 @@ import { OrganizationContactPayload } from '../organization.model';
 @Component({
   selector: 'volontulo-organization-contact',
   templateUrl: './organization-contact.component.html',
-  styleUrls: ['./organization-contact.component.css']
+  styleUrls: ['./organization-contact.component.scss']
 })
 export class OrganizationContactComponent implements OnChanges {
   @ViewChild('contactForm') contactForm: NgForm;

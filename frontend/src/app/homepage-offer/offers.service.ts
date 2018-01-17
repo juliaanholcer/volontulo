@@ -15,16 +15,30 @@ export class OffersService {
 
   getOffers() {
     return this.http.get(this.url, { withCredentials: true } )
-      .map((res: Response) => res.json());
+      .map((res: Response) => res.json())
+      .map(offers => {
+        for (const offer of offers) {
+          this.loadDefaultImage(offer);
+        }
+        return offers;
+      });
   }
 
   getOffer(id: number): Observable<Offer> {
-    return this.http.get(`${this.url}${id}/`, { withCredentials: true } )
-      .map((res: Response) => res.json());
+    return this.http.get(`${this.url}${id}/`, { withCredentials: true })
+      .map((res: Response) => res.json())
+      .map(offer => this.loadDefaultImage(offer));
   }
 
-  getOfferViewUrl(offer: Offer): string {
-    return `${environment.djangoRoot}/offers/${offer.slug}/${offer.id}`;
+  loadDefaultImage(offer: Offer): Offer {
+    if (offer.image === null) {
+        offer.image = 'assets/img/banner/volontulo_baner.png';
+    }
+    return offer;
+  }
+
+  getJoinViewUrl(offer: Offer): string {
+    return `${environment.djangoRoot}/offers/${offer.slug}/${offer.id}/join`;
   }
 
 }

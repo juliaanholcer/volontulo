@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/combineLatest';
@@ -13,7 +13,7 @@ import { environment } from '../../environments/environment';
 @Component({
   selector: 'volontulo-organization',
   templateUrl: './organization.component.html',
-  styleUrls: ['./organization.component.css'],
+  styleUrls: ['./organization.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OrganizationComponent implements OnInit {

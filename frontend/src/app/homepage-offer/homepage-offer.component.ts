@@ -8,17 +8,13 @@ import { Organization } from '../organization/organization.model';
 @Component({
   selector: 'volontulo-homepage-offer',
   templateUrl: './homepage-offer.component.html',
-  styleUrls: ['./homepage-offer.component.css'],
+  styleUrls: ['./homepage-offer.component.scss'],
   providers: [OffersService, OrganizationService]
 })
 export class HomepageOfferComponent {
   @Input() offer: Offer;
 
   constructor(private offersService: OffersService, private organizationService: OrganizationService) {}
-
-  getOfferViewUrl(offer: Offer): string {
-    return this.offersService.getOfferViewUrl(offer);
-  }
 
   getOrganizationViewUrl(organization: Organization): string {
     return this.organizationService.getOrganizationViewUrl(organization);

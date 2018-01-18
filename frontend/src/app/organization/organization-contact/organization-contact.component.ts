@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
 import { NgForm } from '@angular/forms';
+
 import { OrganizationContactPayload } from '../organization.model';
 
 @Component({
@@ -12,9 +13,11 @@ export class OrganizationContactComponent implements OnChanges {
   @Output() contact = new EventEmitter<OrganizationContactPayload>();
   @Input() contactStatus: string;
   submitDisabled = false;
+  alertClosed = true;
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.contactStatus.currentValue === 'success') {
+      this.alertClosed = false;
       this.contactForm.reset();
     }
     this.submitDisabled = false;

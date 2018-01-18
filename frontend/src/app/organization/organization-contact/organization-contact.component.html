@@ -1,5 +1,10 @@
 <div class="container">
   <h2>Formularz kontaktowy</h2>
+  <div *ngIf="!alertClosed">
+  <ngb-alert type="success" (close)="alertClosed = true">
+    Twoja wiadomość została wysłana. <strong>Dziękujemy!</strong>
+  </ngb-alert>
+  </div>
   <form (ngSubmit)="onSubmit()" #contactForm="ngForm">
     <div class="form-group row">
       <label for="id_name" class="col-md-3 col-form-label">Twoje imię i nazwisko</label>

@@ -104,7 +104,7 @@ class OrganizationViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.OrganizationPermission,)
 
     @detail_route(methods=['POST'], permission_classes=(AllowAny,))
-    #pylint: disable=invalid-name, no-self-use
+    # pylint: disable=invalid-name, no-self-use
     def contact(self, request, pk):
         """Endpoint to send contact message to organization"""
         org = get_object_or_404(Organization, id=pk)

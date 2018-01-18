@@ -13,7 +13,6 @@ import { environment } from '../../environments/environment';
 @Component({
   selector: 'volontulo-organization',
   templateUrl: './organization.component.html',
-  styleUrls: ['./organization.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OrganizationComponent implements OnInit {

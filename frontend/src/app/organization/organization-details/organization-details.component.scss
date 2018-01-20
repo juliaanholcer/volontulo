@@ -1,7 +1,9 @@
+@import '~bootstrap/scss/bootstrap-grid';
+
 dt {
   text-align: right;
 }
-@media (max-width: 767.99px) {
+@include media-breakpoint-down(sm) {
   dt {
     text-align: left;
   }

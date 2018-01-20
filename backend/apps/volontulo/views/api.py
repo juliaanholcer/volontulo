@@ -103,9 +103,10 @@ class OrganizationViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.OrganizationSerializer
     permission_classes = (permissions.OrganizationPermission,)
 
+    @staticmethod
     @detail_route(methods=['POST'], permission_classes=(AllowAny,))
-    # pylint: disable=invalid-name, no-self-use
-    def contact(self, request, pk):
+    # pylint: disable=invalid-name
+    def contact(request, pk):
         """Endpoint to send contact message to organization"""
         org = get_object_or_404(Organization, id=pk)
         serializer = OrganizationContact(data=request.data)

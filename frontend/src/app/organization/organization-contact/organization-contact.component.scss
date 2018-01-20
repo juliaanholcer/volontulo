@@ -1,8 +1,10 @@
+@import '~bootstrap/scss/bootstrap-grid';
+
 label {
   font-weight: 700;
   text-align: right;
 }
-@media (max-width: 767.99px) {
+@include media-breakpoint-down(sm) {
   label {
     text-align: left;
   }

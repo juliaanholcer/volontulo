@@ -1,9 +1,10 @@
 """
-.. module:: test_organization_contact
+.. module:: test_contact
 """
 import json
 from unittest import mock
 from django.test import TestCase
+
 from apps.volontulo.factories import OrganizationFactory
 
 

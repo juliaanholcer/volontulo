@@ -27,7 +27,7 @@ export class OrganizationService {
     });
   }
 
-  sendContactForm(organization: Organization, contactData: OrganizationContactPayload) {
+  sendContactForm(organization: Organization, contactData: OrganizationContactPayload): Observable<string> {
     return this.http.post(
       `${environment.apiRoot}/organizations/${organization.id}/contact/`,
       contactData)

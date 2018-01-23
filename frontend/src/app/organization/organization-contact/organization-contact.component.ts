@@ -13,12 +13,15 @@ export class OrganizationContactComponent implements OnChanges {
   @Output() contact = new EventEmitter<OrganizationContactPayload>();
   @Input() contactStatus: string;
   submitDisabled = false;
-  alertClosed = true;
+  alertSuccessClosed = true;
+  alertErrorClosed = true;
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.contactStatus.currentValue === 'success') {
-      this.alertClosed = false;
+      this.alertSuccessClosed = false;
       this.contactForm.reset();
+    } else if (changes.contactStatus.currentValue === 'error') {
+      this.alertErrorClosed = false;
     }
     this.submitDisabled = false;
   }

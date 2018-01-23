@@ -22,19 +22,17 @@ export class OrganizationComponent implements OnInit {
   organization$: Observable<Organization>;
   contactStatus$: Observable<string>;
 
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    private organizationService: OrganizationService,
-    private authService: AuthService,
-  ) {}
+  constructor(private activatedRoute: ActivatedRoute,
+              private organizationService: OrganizationService,
+              private authService: AuthService,) {
+  }
 
   ngOnInit() {
     this.user$ = this.authService.user$;
     this.organization$ = this.organizationService.organization$;
-
     this.activatedRoute.params
       .switchMap(params => this.organizationService.getOrganization(params.organizationId)
-    ).subscribe();
+      ).subscribe();
 
     this.isUserOrgMember$ = this.organization$
       .combineLatest(this.user$, (org, user) => {

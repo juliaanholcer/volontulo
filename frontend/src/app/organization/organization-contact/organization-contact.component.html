@@ -1,8 +1,13 @@
 <div class="container">
   <h2>Formularz kontaktowy</h2>
-  <div *ngIf="!alertClosed">
-  <ngb-alert type="success" (close)="alertClosed = true">
+  <div *ngIf="!alertSuccessClosed">
+  <ngb-alert type="success" (close)="alertSuccessClosed = true">
     Twoja wiadomość została wysłana. <strong>Dziękujemy!</strong>
+  </ngb-alert>
+  </div>
+  <div *ngIf="!alertErrorClosed">
+  <ngb-alert type="danger" (close)="alertErrorClosed = true">
+    Przesłano niepoprawne dane.
   </ngb-alert>
   </div>
   <form (ngSubmit)="onSubmit()" #contactForm="ngForm">

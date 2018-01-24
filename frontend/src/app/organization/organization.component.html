@@ -1,7 +1,6 @@
 <volontulo-organization-details *ngIf="organization$ | async as organization"
   [organization]="organization"
-  [isUserOrgMember]="isUserOrgMember$ | async"
-  [djangoRoot]="djangoRoot">
+  [isUserOrgMember]="isUserOrgMember$ | async">
 </volontulo-organization-details>
 <volontulo-organization-contact
   *ngIf="!(isUserOrgMember$ | async)"

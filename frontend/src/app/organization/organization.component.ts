@@ -8,7 +8,6 @@ import { Organization, OrganizationContactPayload } from './organization.model';
 import { OrganizationService } from './organization.service';
 import { AuthService } from '../auth.service';
 import { User } from '../user';
-import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'volontulo-organization',
@@ -16,7 +15,6 @@ import { environment } from '../../environments/environment';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OrganizationComponent implements OnInit {
-  djangoRoot: string = environment.djangoRoot;
   isUserOrgMember$: Observable<boolean>;
   user$: Observable<User | null>;
   organization$: Observable<Organization>;
@@ -24,24 +22,27 @@ export class OrganizationComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,
               private organizationService: OrganizationService,
-              private authService: AuthService,) {
+              private authService: AuthService, ) {
   }
 
   ngOnInit() {
     this.user$ = this.authService.user$;
+
     this.organization$ = this.organizationService.organization$;
+
     this.activatedRoute.params
       .switchMap(params => this.organizationService.getOrganization(params.organizationId)
       ).subscribe();
 
     this.isUserOrgMember$ = this.organization$
-      .combineLatest(this.user$, (org, user) => {
+      .combineLatest(this.user$, (org, user): boolean => {
         if (org === null || user === null) {
           return false;
         }
         return user.organizations.filter(organ => org.id === organ.id).length > 0;
       });
   }
+
   onContact(organizationContact: OrganizationContactPayload) {
     let organization: Organization;
     this.organization$.take(1).subscribe(org => organization = org);

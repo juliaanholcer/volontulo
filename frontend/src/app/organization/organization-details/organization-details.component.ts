@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 import { Organization } from '../organization.model';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'volontulo-organization-details',
@@ -9,7 +10,7 @@ import { Organization } from '../organization.model';
 })
 
 export class OrganizationDetailsComponent {
-  @Input() djangoRoot: string;
   @Input() isUserOrgMember: boolean;
   @Input() organization: Organization;
+  djangoRoot: string = environment.djangoRoot;
 }

@@ -5,7 +5,6 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
-
 import { environment } from '../../environments/environment';
 import { Organization, OrganizationContactPayload } from './organization.model';
 
@@ -21,6 +20,7 @@ export class OrganizationService {
   }
 
   getOrganization(id: number): Observable<Organization> {
+    // return this.http.get(`${this.url}/${id}/`, this.requestOptions).map(response => response.json());
     return this.http.get(`${this.url}/${id}/`, this.requestOptions).map(response => {
       this._organization$.next(response.json());
       return response.json();

@@ -27,9 +27,7 @@ export class OrganizationContactComponent implements OnChanges {
   }
 
   onSubmit() {
-    if (this.contactForm.value.honeyBunny !== "") {
-      return false;
-    } else {
+    if (this.contactForm.value.honeyBunny === '') {
       this.contact.emit(this.contactForm.value as OrganizationContactPayload);
       this.submitDisabled = true;
     }

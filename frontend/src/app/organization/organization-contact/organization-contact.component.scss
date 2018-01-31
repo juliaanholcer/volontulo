@@ -4,9 +4,6 @@ label {
   font-weight: 700;
   text-align: right;
 }
-#honeyBunny {
-  display: none;
-}
 @include media-breakpoint-down(sm) {
   label {
     text-align: left;

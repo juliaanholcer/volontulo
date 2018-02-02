@@ -42,6 +42,11 @@ urlpatterns = [
         api_views.current_user,
         name='current_user'
     ),
+    url(
+        r'^api/password-reset',
+        api_views.password_reset,
+        name='password_reset'
+    ),
 
     # homepage:
     url(r'^o$', views.homepage, name='homepage'),

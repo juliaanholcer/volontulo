@@ -7,7 +7,11 @@
 from django.contrib.auth import authenticate
 from django.contrib.auth import login
 from django.contrib.auth import logout
+from django.contrib.auth.models import User
+from django.contrib.auth.tokens import default_token_generator
 from django.shortcuts import get_object_or_404
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
 from rest_framework import status
 from rest_framework.decorators import api_view, detail_route
 from rest_framework.decorators import authentication_classes
@@ -80,6 +84,21 @@ def current_user(request):
 
     return Response(None, status=status.HTTP_200_OK)
 
+
+@api_view(['POST'])
+@authentication_classes((CsrfExemptSessionAuthentication,))
+@permission_classes((AllowAny,))
+def password_reset(request):
+    """REST API resseting password"""
+    username = request.data.get('username')
+    try:
+        user = User.objects.get(username=username)
+    except User.DoesNotExist:
+        pass
+    else:
+        uid = urlsafe_base64_encode(force_bytes(user.pk))
+        token = default_token_generator.make_token(user)
+    return Response(None, status=status.HTTP_201_CREATED)
 
 class OfferViewSet(viewsets.ModelViewSet):
 

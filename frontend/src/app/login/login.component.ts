@@ -16,7 +16,7 @@ export class LoginComponent {
     password: '',
   };
   isAuthFailed: boolean;
-  resetPasswordUrl = this.authService.resetPasswordUrl;
+  // resetPasswordUrl = this.authService.resetPasswordUrl;
 
   constructor(private authService: AuthService,
   ) { }

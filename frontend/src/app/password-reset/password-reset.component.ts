@@ -3,7 +3,6 @@ import { NgForm } from '@angular/forms';
 
 import { AuthService } from '../auth.service';
 
-
 @Component({
   selector: 'volontulo-password-reset',
   templateUrl: './password-reset.component.html',
@@ -12,7 +11,6 @@ import { AuthService } from '../auth.service';
 export class PasswordResetComponent {
   @ViewChild('resetForm') resetForm: NgForm;
   alertSuccessClosed = true;
-  alertErrorClosed = true;
 
   constructor(private authService: AuthService) { }
 
@@ -20,12 +18,8 @@ export class PasswordResetComponent {
     this.authService.resetPassword(this.resetForm.value)
       .subscribe(status => {
         if (status === 'success') {
-          this.alertErrorClosed = true;
           this.alertSuccessClosed = false;
           this.resetForm.reset();
-        } else if (status === 'error') {
-          this.alertSuccessClosed = true;
-          this.alertErrorClosed = false;
         }
       });
   }

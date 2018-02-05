@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { AuthService } from '../auth.service';
 
@@ -8,27 +8,29 @@ import { AuthService } from '../auth.service';
 @Component({
   selector: 'volontulo-password-reset-confirm',
   templateUrl: './password-reset-confirm.component.html',
-  styleUrls: ['./password-reset-confirm.component.scss'],
+  styleUrls: ['./password-reset.component.scss'],
 })
 export class PasswordResetConfirmComponent implements OnInit {
   @ViewChild('resetForm') resetForm: NgForm;
-  uid: string;
+  uidb64: string;
   token: string;
 
   constructor(private activatedRoute: ActivatedRoute,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private router: Router) {
   }
   ngOnInit() {
     this.activatedRoute.params
       .subscribe(params => {
-        this.uid = params.uid;
+        this.uidb64 = params.uidb64;
         this.token = params.token;
       });
   }
 
   onSubmit() {
-    console.log(`${this.uid} ${this.token}`);
-    this.authService.confirmResetPassword(this.uid, this.token);
+    this.authService.confirmResetPassword(this.resetForm.value.password, this.uidb64, this.token)
+      .subscribe();
+    this.router.navigate(['login']);
   }
 
 }

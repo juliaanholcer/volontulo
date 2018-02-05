@@ -4,14 +4,16 @@
 .. module:: api
 """
 
+from django.conf import settings
 from django.contrib.auth import authenticate
 from django.contrib.auth import login
 from django.contrib.auth import logout
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
+from django.contrib.sites.shortcuts import get_current_site
 from django.shortcuts import get_object_or_404
-from django.utils.encoding import force_bytes
-from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes, force_text
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from rest_framework import status
 from rest_framework.decorators import api_view, detail_route
 from rest_framework.decorators import authentication_classes
@@ -89,16 +91,43 @@ def current_user(request):
 @authentication_classes((CsrfExemptSessionAuthentication,))
 @permission_classes((AllowAny,))
 def password_reset(request):
-    """REST API resseting password"""
+    """REST API reset password request"""
     username = request.data.get('username')
     try:
         user = User.objects.get(username=username)
     except User.DoesNotExist:
         pass
     else:
-        uid = urlsafe_base64_encode(force_bytes(user.pk))
-        token = default_token_generator.make_token(user)
+        context = {
+            'email': username,
+            'domain': get_current_site(request).domain,
+            'ANGULAR_ROOT': settings.ANGULAR_ROOT,
+            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+            'user': user,
+            'token': default_token_generator.make_token(user),
+            'protocol': 'https' if request.is_secure() else 'http',
+        }
+        send_mail(request, 'password_reset', [username], context=context)
     return Response(None, status=status.HTTP_201_CREATED)
+
+
+@api_view(['POST'])
+@authentication_classes((CsrfExemptSessionAuthentication,))
+@permission_classes((AllowAny,))
+def password_reset_confirm(request, uidb64, token):
+    """REST API reset password confirm"""
+    # import pdb; pdb.set_trace()
+    assert uidb64 is not None and token is not None
+    uid = force_text(urlsafe_base64_decode(uidb64))
+    try:
+        user = User.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None and default_token_generator.check_token(user, token):
+        if request.method == 'POST':
+            user.set_password(request.POST.get('password'))
+    return Response(None, status=status.HTTP_201_CREATED)
+
 
 class OfferViewSet(viewsets.ModelViewSet):
 

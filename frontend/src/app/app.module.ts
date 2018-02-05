@@ -86,7 +86,7 @@ const appRoutes: Routes = [
     component: OrganizationsComponent
   },
   {
-    path: 'password-reset/:uid/:token',
+    path: 'password-reset/:uidb64/:token',
     component: PasswordResetConfirmComponent,
   },
   {

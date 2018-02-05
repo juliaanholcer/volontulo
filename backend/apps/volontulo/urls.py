@@ -43,9 +43,14 @@ urlpatterns = [
         name='current_user'
     ),
     url(
-        r'^api/password-reset',
+        r'^api/password-reset$',
         api_views.password_reset,
         name='password_reset'
+    ),
+    url(
+        r'^api/password-reset/(?P<uidb64>[0-9A-Za-z]+)/(?P<token>.+)$',
+        api_views.password_reset_confirm,
+        name='password_reset_confirm'
     ),
 
     # homepage:

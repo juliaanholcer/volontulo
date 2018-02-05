@@ -47,9 +47,9 @@ export class AuthService {
         }
       });
   }
-  resetPassword(email: string) {
+  resetPassword(username: string) {
     return this.http.post(
-      this._passwordResetUrl, email)
+      this._passwordResetUrl, username)
       .map(response => {
         if (response.status === 201) {
           return 'success';
@@ -57,8 +57,14 @@ export class AuthService {
       }).catch(err => Observable.of('error'));
   }
 
-  confirmResetPassword(uid:string, token:string) {
-    return uid + '' + token;
+  confirmResetPassword(password: string, uidb64: string, token: string) {
+    return this.http.post(
+      `${this._passwordResetUrl}/${uidb64}/${token}`, password)
+      .map(response => {
+        if (response.status === 201) {
+          return 'success';
+        }
+      }).catch(err => Observable.of('error'));
   }
 
   currentUser(): User {

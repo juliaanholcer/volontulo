@@ -24,6 +24,7 @@ SUBJECTS = {
     'registration': 'Rejestracja na Volontulo',
     'contact_to_admin': 'Kontakt z administratorem',
     'volunteer_to_organisation': 'Kontakt od wolontariusza',
+    'password_reset': 'Reset hasła na Volontulo',
 }
 
 

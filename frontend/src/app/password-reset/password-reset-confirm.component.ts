@@ -17,8 +17,8 @@ export class PasswordResetConfirmComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,
               private authService: AuthService,
-              private router: Router) {
-  }
+              private router: Router) {}
+
   ngOnInit() {
     this.activatedRoute.params
       .subscribe(params => {
@@ -28,9 +28,8 @@ export class PasswordResetConfirmComponent implements OnInit {
   }
 
   onSubmit() {
-    this.authService.confirmResetPassword(this.resetForm.value.password, this.uidb64, this.token)
+    this.authService.confirmResetPassword({password: this.resetForm.value.password}, this.uidb64, this.token)
       .subscribe();
     this.router.navigate(['login']);
   }
-
 }

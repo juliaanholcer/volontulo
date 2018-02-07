@@ -107,7 +107,12 @@ def password_reset(request):
             'token': default_token_generator.make_token(user),
             'protocol': 'https' if request.is_secure() else 'http',
         }
-        send_mail(request, 'password_reset', [username], context=context)
+        send_mail(
+            request,
+            'password_reset',
+            [username],
+            context=context,
+            send_copy_to_admin=False)
     return Response(None, status=status.HTTP_201_CREATED)
 
 
@@ -116,7 +121,6 @@ def password_reset(request):
 @permission_classes((AllowAny,))
 def password_reset_confirm(request, uidb64, token):
     """REST API reset password confirm"""
-    # import pdb; pdb.set_trace()
     assert uidb64 is not None and token is not None
     uid = force_text(urlsafe_base64_decode(uidb64))
     try:
@@ -124,8 +128,8 @@ def password_reset_confirm(request, uidb64, token):
     except (TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
     if user is not None and default_token_generator.check_token(user, token):
-        if request.method == 'POST':
-            user.set_password(request.POST.get('password'))
+        user.set_password(request.data.get('password'))
+        user.save()
     return Response(None, status=status.HTTP_201_CREATED)
 
 

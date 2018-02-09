@@ -1,9 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { AuthService } from '../auth.service';
-
 
 @Component({
   selector: 'volontulo-password-reset-confirm',
@@ -11,13 +10,14 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./password-reset.component.scss'],
 })
 export class PasswordResetConfirmComponent implements OnInit {
-  @ViewChild('resetForm') resetForm: NgForm;
+  resetForm: FormGroup;
   uidb64: string;
   token: string;
 
   constructor(private activatedRoute: ActivatedRoute,
               private authService: AuthService,
-              private router: Router) {}
+              private router: Router,
+              private fb: FormBuilder) {}
 
   ngOnInit() {
     this.activatedRoute.params
@@ -25,11 +25,24 @@ export class PasswordResetConfirmComponent implements OnInit {
         this.uidb64 = params.uidb64;
         this.token = params.token;
       });
+    this.resetForm = this.fb.group({
+      'passwords': this.fb.group({
+        'password': this.fb.control(null, Validators.required),
+        'confirmPassword': this.fb.control(null, Validators.required),
+      }, {validator: this.checkPasswords})
+    });
+  }
+
+  checkPasswords(group: FormGroup): {[key: string] : boolean} {
+    let password = group.get('password').value;
+    let confirmPassword = group.get('confirmPassword').value;
+    return password === confirmPassword ? null : { notEqual: true }
   }
 
   onSubmit() {
-    this.authService.confirmResetPassword({password: this.resetForm.value.password}, this.uidb64, this.token)
+    const password = this.resetForm.get('passwords.password').value;
+    this.authService.confirmResetPassword({password}, this.uidb64, this.token)
       .subscribe();
-    this.router.navigate(['login']);
+    //this.router.navigate(['login']);
   }
 }

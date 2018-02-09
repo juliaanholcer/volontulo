@@ -33,9 +33,9 @@ export class PasswordResetConfirmComponent implements OnInit {
     });
   }
 
-  checkPasswords(group: FormGroup): {[key: string] : boolean} {
-    let password = group.get('password').value;
-    let confirmPassword = group.get('confirmPassword').value;
+  checkPasswords(group: FormGroup): {[key: string]: boolean} {
+    const password = group.get('password').value;
+    const confirmPassword = group.get('confirmPassword').value;
     return password === confirmPassword ? null : { notEqual: true }
   }
 
@@ -43,6 +43,6 @@ export class PasswordResetConfirmComponent implements OnInit {
     const password = this.resetForm.get('passwords.password').value;
     this.authService.confirmResetPassword({password}, this.uidb64, this.token)
       .subscribe();
-    //this.router.navigate(['login']);
+    this.router.navigate(['login']);
   }
 }

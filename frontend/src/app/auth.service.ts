@@ -47,7 +47,7 @@ export class AuthService {
         }
       });
   }
-  resetPassword(username: string): Observable<string> {
+  resetPassword(username: {username: string}): Observable<string> {
     return this.http.post(
       this._passwordResetUrl, username)
       .map(response => {

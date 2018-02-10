@@ -115,3 +115,16 @@ class OrganizationContact(serializers.Serializer):
                          trim_whitespace=True)
     message = CharField(required=True, min_length=2, max_length=500,
                         trim_whitespace=True)
+
+
+# pylint: disable=abstract-method
+class Username(serializers.Serializer):
+    """Serializer for password reset"""
+    username = EmailField(required=True)
+
+
+# pylint: disable=abstract-method
+class Password(serializers.Serializer):
+    """Serializer for password reset"""
+    password = CharField(required=True, min_length=2, max_length=150,
+                         trim_whitespace=True)

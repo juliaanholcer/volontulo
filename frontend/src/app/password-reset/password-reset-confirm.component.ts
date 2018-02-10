@@ -39,7 +39,7 @@ export class PasswordResetConfirmComponent implements OnInit {
     return password === confirmPassword ? null : { notEqual: true }
   }
 
-  onSubmit() {
+  onSubmit(): void {
     const password = this.resetForm.get('passwords.password').value;
     this.authService.confirmResetPassword({password}, this.uidb64, this.token)
       .subscribe();

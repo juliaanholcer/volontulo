@@ -28,7 +28,7 @@ from apps.volontulo import serializers
 from apps.volontulo.authentication import CsrfExemptSessionAuthentication
 from apps.volontulo.lib.email import send_mail
 from apps.volontulo.models import Organization
-from apps.volontulo.serializers import OrganizationContact
+from apps.volontulo.serializers import OrganizationContact, Username, Password
 from apps.volontulo.views import logged_as_admin
 
 
@@ -92,7 +92,9 @@ def current_user(request):
 @permission_classes((AllowAny,))
 def password_reset(request):
     """REST API reset password request"""
-    username = request.data.get('username')
+    serializer = Username(data=request.data)
+    serializer.is_valid(raise_exception=True)
+    username = serializer.validated_data.get('username')
     try:
         user = User.objects.get(username=username)
     except User.DoesNotExist:
@@ -121,6 +123,8 @@ def password_reset(request):
 @permission_classes((AllowAny,))
 def password_reset_confirm(request, uidb64, token):
     """REST API reset password confirm"""
+    serializer = Password(data=request.data)
+    serializer.is_valid(raise_exception=True)
     assert uidb64 is not None and token is not None
     uid = force_text(urlsafe_base64_decode(uidb64))
     try:
@@ -128,7 +132,7 @@ def password_reset_confirm(request, uidb64, token):
     except (TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
     if user is not None and default_token_generator.check_token(user, token):
-        user.set_password(request.data.get('password'))
+        user.set_password(serializer.validated_data.get('password'))
         user.save()
     return Response(None, status=status.HTTP_201_CREATED)
 

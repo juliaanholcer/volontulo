@@ -15,7 +15,7 @@ export class PasswordResetComponent {
 
   constructor(private authService: AuthService) { }
 
-  onSubmit() {
+  onSubmit(): void {
     this.authService.resetPassword(this.resetForm.value)
       .subscribe(status => {
         if (status === 'success') {

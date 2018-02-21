@@ -28,7 +28,8 @@ from apps.volontulo import serializers
 from apps.volontulo.authentication import CsrfExemptSessionAuthentication
 from apps.volontulo.lib.email import send_mail
 from apps.volontulo.models import Organization
-from apps.volontulo.serializers import OrganizationContact, Username, Password
+from apps.volontulo.serializers import \
+    OrganizationContactSerializer, UsernameSerializer, PasswordSerializer
 from apps.volontulo.views import logged_as_admin
 
 
@@ -91,8 +92,8 @@ def current_user(request):
 @authentication_classes((CsrfExemptSessionAuthentication,))
 @permission_classes((AllowAny,))
 def password_reset(request):
-    """REST API reset password request"""
-    serializer = Username(data=request.data)
+    """REST API reset password view"""
+    serializer = UsernameSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
     username = serializer.validated_data.get('username')
     try:
@@ -123,13 +124,12 @@ def password_reset(request):
 @permission_classes((AllowAny,))
 def password_reset_confirm(request, uidb64, token):
     """REST API reset password confirm"""
-    serializer = Password(data=request.data)
+    serializer = PasswordSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
-    assert uidb64 is not None and token is not None
     uid = force_text(urlsafe_base64_decode(uidb64))
     try:
         user = User.objects.get(pk=uid)
-    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+    except User.DoesNotExist:
         user = None
     if user is not None and default_token_generator.check_token(user, token):
         user.set_password(serializer.validated_data.get('password'))
@@ -165,7 +165,7 @@ class OrganizationViewSet(viewsets.ModelViewSet):
     def contact(request, pk):
         """Endpoint to send contact message to organization"""
         org = get_object_or_404(Organization, id=pk)
-        serializer = OrganizationContact(data=request.data)
+        serializer = OrganizationContactSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         send_mail(
             request,

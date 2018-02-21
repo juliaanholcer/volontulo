@@ -47,9 +47,9 @@ export class AuthService {
         }
       });
   }
-  resetPassword(username: {username: string}): Observable<string> {
+  resetPassword(username: string): Observable<string> {
     return this.http.post(
-      this._passwordResetUrl, username)
+      this._passwordResetUrl, {username})
       .map(response => {
         if (response.status === 201) {
           return 'success';
@@ -58,11 +58,11 @@ export class AuthService {
   }
 
   confirmResetPassword(
-    password: {password: string},
+    password: string,
     uidb64: string,
     token: string): Observable<string> {
     return this.http.post(
-      `${this._passwordResetUrl}/${uidb64}/${token}`, password)
+      `${this._passwordResetUrl}/${uidb64}/${token}`, {password})
       .map(response => {
         if (response.status === 201) {
           return 'success';

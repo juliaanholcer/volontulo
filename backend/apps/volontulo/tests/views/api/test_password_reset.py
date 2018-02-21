@@ -26,11 +26,11 @@ class TestPasswordReset(TestCase):
 
     def test_password_reset_400_bad_request(self):
         """ Test for sending bad request """
-        res = self.client.post('/api/password-reset',
-                               json.dumps({
-                                   'username': 'You-Know-Who'
-                               }),
-                               content_type='application/json')
+        res = self.client.post(
+            '/api/password-reset',
+            json.dumps({'username': 'You-Know-Who'}),
+            content_type='application/json'
+        )
         self.assertEqual(res.status_code, 400)
 
     def test_password_reset_405_if_method_not_allowed(self):
@@ -38,50 +38,48 @@ class TestPasswordReset(TestCase):
         res = self.client.get('/api/password-reset')
         self.assertEqual(res.status_code, 405)
 
-    def test_password_reset_415_if_incorrect_data(self):
+    def test_password_reset_415_if_incorrect_format(self):
         """ Test for sending username in incorrect format """
-        res = self.client.post('/api/password-reset',
-                               {'username': 'you_know_who@slytherin.com'})
+        res = self.client.post(
+            '/api/password-reset',
+            {'username': 'you_know_who@slytherin.com'}
+        )
         self.assertEqual(res.status_code, 415)
 
     def test_password_reset_201_created(self):
         """ Test for sending username in correct format """
-        res = self.client.post('/api/password-reset',
-                               json.dumps({
-                                   'username': 'you_know_who@slytherin.com'
-                               }),
-                               content_type='application/json')
+        res = self.client.post(
+            '/api/password-reset',
+            json.dumps({'username': self.user.username}),
+            content_type='application/json'
+        )
         self.assertEqual(res.status_code, 201)
 
-    def test_send_email(self):
+    @mock.patch('apps.volontulo.views.api.send_mail')
+    def test_send_email(self, mock_send):
         """ Test for sending email """
-        with mock.patch('apps.volontulo.views.api.send_mail') as mock_send:
-
-            res = self.client.post(
-                '/api/password-reset',
-                json.dumps({
-                    'username': self.user.username
-                }),
-                content_type='application/json'
-            )
-
+        res = self.client.post(
+            '/api/password-reset',
+            json.dumps({'username': self.user.username}),
+            content_type='application/json'
+        )
         self.assertEqual(res.status_code, 201)
         self.assertEqual(mock_send.call_count, 1)
 
     def test_password_reset_confirm_400_bad_request(self):
         """ Test for sending incorrect password """
-        res = self.client.post('/api/password-reset/{}/{}'.format(
-            self.uid, self.token),
-                               json.dumps({
-                                   'password': 'Q'
-                               }),
-                               content_type='application/json')
+        res = self.client.post(
+            '/api/password-reset/{}/{}'.format(self.uid, self.token),
+            json.dumps({'password': 'Q'}),
+            content_type='application/json'
+        )
         self.assertEqual(res.status_code, 400)
 
     def test_password_reset_confirm_405_if_method_not_allowed(self):
         """ Test for using wrong method """
-        res = self.client.get('/api/password-reset/{}/{}'.format(
-            self.uid, self.token))
+        res = self.client.get(
+            '/api/password-reset/{}/{}'.format(self.uid, self.token)
+        )
         self.assertEqual(res.status_code, 405)
 
     def test_password_reset_confirm_404(self):
@@ -94,10 +92,8 @@ class TestPasswordReset(TestCase):
 
     def test_password_reset_confirm_201_created(self):
         """ Test for sending password in correct format """
-        res = self.client.post('/api/password-reset/{}/{}'.format(
-            self.uid, self.token),
-                               json.dumps({
-                                   'password': 'AvadaKedavra'
-                               }),
-                               content_type='application/json')
+        res = self.client.post(
+            '/api/password-reset/{}/{}'.format(self.uid, self.token),
+            json.dumps({'password': 'AvadaKedavra'}),
+            content_type='application/json')
         self.assertEqual(res.status_code, 201)

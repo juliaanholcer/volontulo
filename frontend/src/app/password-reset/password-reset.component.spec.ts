@@ -1,9 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 
 import { PasswordResetComponent } from './password-reset.component';
 import { AuthService } from '../auth.service';
+import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 
 describe('PasswordResetComponent', () => {
   let component: PasswordResetComponent;
@@ -13,9 +13,9 @@ describe('PasswordResetComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         FormsModule,
-        NgbModule,
       ],
       declarations: [ PasswordResetComponent ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [
         {
           provide: AuthService,

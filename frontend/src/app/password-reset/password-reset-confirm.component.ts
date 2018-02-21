@@ -41,8 +41,14 @@ export class PasswordResetConfirmComponent implements OnInit {
 
   onSubmit(): void {
     const password = this.resetForm.get('passwords.password').value;
-    this.authService.confirmResetPassword({password}, this.uidb64, this.token)
+    this.authService.confirmResetPassword(password, this.uidb64, this.token)
       .subscribe();
     this.router.navigate(['login']);
+  }
+  isFormInputInvalid(inputStringId: string): boolean {
+    return this.resetForm.get(inputStringId).invalid && this.resetForm.get(inputStringId).touched;
+  }
+  arePasswordsNotEqual() : boolean {
+    return this.resetForm.get('passwords.confirmPassword').dirty && this.resetForm.get('passwords').errors && this.resetForm.get('passwords').errors.notEqual;
   }
 }

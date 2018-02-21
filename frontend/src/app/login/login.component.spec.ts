@@ -4,7 +4,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { AuthService } from '../auth.service';
 import { LoginComponent } from './login.component';
-import { PasswordResetComponent } from '../password-reset/password-reset.component';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -14,13 +13,10 @@ describe('LoginComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         FormsModule,
-        RouterTestingModule.withRoutes([
-          { path: 'password-reset', component: PasswordResetComponent },
-        ])
+        RouterTestingModule
       ],
       declarations: [
         LoginComponent,
-        PasswordResetComponent,
       ],
       providers: [
         {

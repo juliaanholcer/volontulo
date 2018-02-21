@@ -15,9 +15,7 @@ describe('LoginComponent', () => {
         FormsModule,
         RouterTestingModule
       ],
-      declarations: [
-        LoginComponent,
-      ],
+      declarations: [LoginComponent],
       providers: [
         {
           provide: AuthService,

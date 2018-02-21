@@ -38,6 +38,7 @@ def send_mail(request, templates_name, recipient_list, context=None,
 
     context = context or {}
     context.update({
+        'ANGULAR_ROOT': settings.ANGULAR_ROOT,
         'protocol': 'https' if request.is_secure() else 'http',
         'domain': get_current_site(request).domain,
     })

@@ -4,7 +4,6 @@
 .. module:: api
 """
 
-from django.conf import settings
 from django.contrib.auth import authenticate
 from django.contrib.auth import login
 from django.contrib.auth import logout
@@ -104,7 +103,6 @@ def password_reset(request):
         context = {
             'email': username,
             'domain': get_current_site(request).domain,
-            'ANGULAR_ROOT': settings.ANGULAR_ROOT,
             'uid': urlsafe_base64_encode(force_bytes(user.pk)),
             'user': user,
             'token': default_token_generator.make_token(user),

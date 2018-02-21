@@ -48,7 +48,9 @@ export class PasswordResetConfirmComponent implements OnInit {
   isFormInputInvalid(inputStringId: string): boolean {
     return this.resetForm.get(inputStringId).invalid && this.resetForm.get(inputStringId).touched;
   }
-  arePasswordsNotEqual() : boolean {
-    return this.resetForm.get('passwords.confirmPassword').dirty && this.resetForm.get('passwords').errors && this.resetForm.get('passwords').errors.notEqual;
+  arePasswordsNotEqual(): boolean {
+    return this.resetForm.get('passwords.confirmPassword').dirty
+      && this.resetForm.get('passwords').errors
+      && this.resetForm.get('passwords').errors.notEqual;
   }
 }

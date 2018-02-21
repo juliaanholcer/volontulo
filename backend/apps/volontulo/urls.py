@@ -65,16 +65,6 @@ urlpatterns = [
         auth_views.activate,
         name='activate'
     ),
-    url(
-        r'^o/password-reset$',
-        auth_views.password_reset,
-        name='password_reset'
-    ),
-    url(
-        r'^o/password-reset/(?P<uidb64>[0-9A-Za-z]+)/(?P<token>.+)$',
-        auth_views.password_reset_confirm,
-        name='password_reset_confirm'
-    ),
     url(r'^o/me$', views.logged_user_profile, name='logged_user_profile'),
     # me/edit
     # me/settings

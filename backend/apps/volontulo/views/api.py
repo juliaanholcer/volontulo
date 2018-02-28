@@ -3,7 +3,7 @@
 """
 .. module:: api
 """
-
+from django_filters.rest_framework import DjangoFilterBackend
 from django.contrib.auth import authenticate
 from django.contrib.auth import login
 from django.contrib.auth import logout
@@ -26,7 +26,7 @@ from apps.volontulo import permissions
 from apps.volontulo import serializers
 from apps.volontulo.authentication import CsrfExemptSessionAuthentication
 from apps.volontulo.lib.email import send_mail
-from apps.volontulo.models import Organization
+from apps.volontulo.models import Offer, Organization
 from apps.volontulo.serializers import \
     OrganizationContactSerializer, UsernameSerializer, PasswordSerializer
 from apps.volontulo.views import logged_as_admin
@@ -138,12 +138,23 @@ def password_reset_confirm(request, uidb64, token):
 class OfferViewSet(viewsets.ModelViewSet):
 
     """REST API offers viewset."""
-
     serializer_class = serializers.OfferSerializer
     permission_classes = (permissions.OfferPermission,)
+    filter_backends = (DjangoFilterBackend,)
+    filter_fields = (
+        'finished_at',
+        'location',
+        'organization',
+        'organization__id',
+        'organization__name',
+        'requirements',
+        'started_at',
+        'recruitment_end_date'
+        )
 
     def get_queryset(self):
         """Queryset depends on user role."""
+
         if logged_as_admin(self.request):
             return models.Offer.objects.get_for_administrator()
         return models.Offer.objects.get_weightened()
@@ -175,3 +186,13 @@ class OrganizationViewSet(viewsets.ModelViewSet):
             serializer.validated_data,
         )
         return Response(data=True, status=status.HTTP_201_CREATED)
+
+    @staticmethod
+    @detail_route(methods=['GET'], permission_classes=(AllowAny,))
+    def offers(request, pk):
+        """ Endpoint to get offers for organization """
+        offers = Offer.objects.filter(organization_id=pk)
+        return Response(
+            serializers.OfferSerializer(
+                offers, many=True, context={'request': request}).data,
+            status=status.HTTP_200_OK)

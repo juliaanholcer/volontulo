@@ -3,7 +3,7 @@
 """
 .. module:: api
 """
-from django_filters.rest_framework import DjangoFilterBackend
+
 from django.contrib.auth import authenticate
 from django.contrib.auth import login
 from django.contrib.auth import logout
@@ -13,6 +13,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.shortcuts import get_object_or_404
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
 from rest_framework.decorators import api_view, detail_route
 from rest_framework.decorators import authentication_classes
@@ -189,6 +190,7 @@ class OrganizationViewSet(viewsets.ModelViewSet):
 
     @staticmethod
     @detail_route(methods=['GET'], permission_classes=(AllowAny,))
+    # pylint: disable=invalid-name
     def offers(request, pk):
         """ Endpoint to get offers for organization """
         offers = Offer.objects.filter(organization_id=pk)

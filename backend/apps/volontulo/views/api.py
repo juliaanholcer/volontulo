@@ -139,6 +139,7 @@ def password_reset_confirm(request, uidb64, token):
 class OfferViewSet(viewsets.ModelViewSet):
 
     """REST API offers viewset."""
+
     serializer_class = serializers.OfferSerializer
     permission_classes = (permissions.OfferPermission,)
     filter_backends = (DjangoFilterBackend,)
@@ -155,7 +156,6 @@ class OfferViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         """Queryset depends on user role."""
-
         if logged_as_admin(self.request):
             return models.Offer.objects.get_for_administrator()
         return models.Offer.objects.get_weightened()
@@ -193,8 +193,14 @@ class OrganizationViewSet(viewsets.ModelViewSet):
     # pylint: disable=invalid-name
     def offers(request, pk):
         """ Endpoint to get offers for organization """
-        offers = Offer.objects.filter(organization_id=pk)
+        get_object_or_404(Organization, id=pk)
+        if logged_as_admin(request):
+            offers = Offer.objects.filter(organization_id=pk)
+        else:
+            offers = Offer.objects.get_active().filter(organization_id=pk)
         return Response(
             serializers.OfferSerializer(
-                offers, many=True, context={'request': request}).data,
+                offers,
+                many=True,
+                context={'request': request}).data,
             status=status.HTTP_200_OK)

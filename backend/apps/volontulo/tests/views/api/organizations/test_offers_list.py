@@ -4,7 +4,7 @@
 
 from django.test import TestCase
 
-from apps.volontulo.factories import OrganizationFactory, OfferFactory
+from apps.volontulo.factories import OfferFactory
 
 
 class TestOrganizationOffers(TestCase):

@@ -193,11 +193,11 @@ class OrganizationViewSet(viewsets.ModelViewSet):
     # pylint: disable=invalid-name
     def offers(request, pk):
         """ Endpoint to get offers for organization """
-        get_object_or_404(Organization, id=pk)
+        organization = get_object_or_404(Organization, id=pk)
         if logged_as_admin(request):
-            offers = Offer.objects.filter(organization_id=pk)
+            offers = organization.offer_set.get_for_administrator()
         else:
-            offers = Offer.objects.get_active().filter(organization_id=pk)
+            offers = organization.offer_set.get_weightened()
         return Response(
             serializers.OfferSerializer(
                 offers,

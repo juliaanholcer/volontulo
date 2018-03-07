@@ -1,5 +1,5 @@
 """
-.. module:: test_contact
+.. module:: test_offers_list
 """
 
 from django.test import TestCase

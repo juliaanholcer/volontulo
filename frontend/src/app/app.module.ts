@@ -29,6 +29,7 @@ import { OfferDetailComponent } from './offers/offer-detail/offer-detail.compone
 import { IconComponent } from './icon/icon.component';
 import { IconLabelComponent } from './icon-label/icon-label.component';
 import { BannerComponent } from './banner/banner.component';
+import { MessagesComponent } from './messages/messages.component';
 import { OrganizationsComponent } from './organizations/organizations.component';
 import { HttpWithCredentialsInterceptor, HttpXsrfInterceptor } from './http-interceptor';
 import { FaqOrganizationsComponent } from './static/faq-organizations.component';
@@ -130,6 +131,7 @@ registerLocaleData(localePl);
     FaqVolunteersComponent,
     PasswordResetComponent,
     PasswordResetConfirmComponent,
+    MessagesComponent,
     OrganizationOffersListComponent,
   ],
   imports: [

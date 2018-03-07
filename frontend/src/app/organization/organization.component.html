@@ -7,3 +7,7 @@
   (contact)="onContact($event)"
   [contactStatus]="contactStatus$ | async">
 </volontulo-organization-contact>
+<volontulo-organization-offers-list
+  [offers]="offers"
+  [isUserOrgMember]="isUserOrgMember$ | async">
+</volontulo-organization-offers-list>

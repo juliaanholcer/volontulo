@@ -1,0 +1,48 @@
+<div class="container" *ngIf="offers; else noOffers;">
+  <table class="table table-striped mt-3">
+    <thead>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col">Tytuł</th>
+        <th scope="col">Miejsce</th>
+        <th scope="col">Czas obowiązywania</th>
+        <th scope="col">Status</th>
+        <th scope="col" ></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let offer of offers">
+        <td>
+          <a class="" [routerLink]="['/offers', offer.slug, offer.id]">
+            <img class="rounded-circle" src="{{ offer.image }}" alt="Image for {{ offer.slug }}" />
+          </a>
+        </td>
+        <td>
+          <a [routerLink]="['/offers', offer.slug, offer.id]">Title</a>
+        </td>
+        <td>
+          <p>location</p>
+        </td>
+        <td>
+          <div>
+            <span> Od {{ offer.startedAt ? (offer.startedAt | date: 'dd MMMM yyyy, hh:mm'): 'teraz' }} </span>
+      &nbsp;     <span> do {{ offer.finishedAt ? (offer.finishedAt | date: 'dd MMMM yyyy, hh:mm'): 'ustalenia' }}</span>
+          </div>
+        </td>
+        <td>
+          <div>
+            <span class="badge badge-warning">status</span>
+            <span class="badge badge-warning">???</span>
+          </div>
+        </td>
+        <td class="text-right">
+          <a [routerLink]="['/offers', offer.slug, offer.id]" class="btn btn-primary">Włącz się</a>
+          <a [routerLink]="[environment.djangoRoot,'offers', offer.slug, offer.id, 'edit']" class="btn btn-info">Edytuj</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<ng-template #noOffers>
+<div class="container mt-3">Ta organizacja nie utworzyła jeszcze żadnych ofert.</div>
+</ng-template>

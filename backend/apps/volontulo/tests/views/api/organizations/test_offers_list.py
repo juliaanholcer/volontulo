@@ -5,6 +5,7 @@
 from django.test import TestCase
 
 from apps.volontulo.factories import OfferFactory
+from apps.volontulo.tests import common
 
 
 class TestOrganizationOffers(TestCase):
@@ -34,3 +35,5 @@ class TestOrganizationOffers(TestCase):
             '/api/organizations/{}/offers/'
             .format(self.offer.organization.id))
         self.assertEqual(res.status_code, 200)
+        for offer in res.data:
+            common.test_offer_list_fields(self, offer)

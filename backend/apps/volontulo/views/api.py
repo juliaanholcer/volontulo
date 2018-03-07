@@ -27,7 +27,7 @@ from apps.volontulo import permissions
 from apps.volontulo import serializers
 from apps.volontulo.authentication import CsrfExemptSessionAuthentication
 from apps.volontulo.lib.email import send_mail
-from apps.volontulo.models import Offer, Organization
+from apps.volontulo.models import Organization
 from apps.volontulo.serializers import \
     OrganizationContactSerializer, UsernameSerializer, PasswordSerializer
 from apps.volontulo.views import logged_as_admin

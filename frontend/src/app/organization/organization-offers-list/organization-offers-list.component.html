@@ -20,10 +20,13 @@
         Od {{ offer.startedAt ? (offer.startedAt | date: 'dd MMMM yyyy, hh:mm') : 'teraz' }}
         do {{ offer.finishedAt ? (offer.finishedAt | date: 'dd MMMM yyyy, hh:mm') : 'ustalenia' }}
       </td>
-      <td><span class="badge badge-warning">status</span></td>
+      <td>
+        <span class="badge badge-warning">{{ offer.offerStatus }}</span>
+        <span class="badge badge-info">{{ offer.actionStatus }}</span>
+      </td>
       <td>
         <a
-          *ngIf="!isUserOrgMember"
+          *ngIf="!isUserOrgMember && offer.actionStatus !== 'finished'"
           [routerLink]="['/offers', offer.slug, offer.id]"
           class="btn btn-primary"
         >

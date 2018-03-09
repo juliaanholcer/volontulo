@@ -15,4 +15,7 @@ export class Offer {
     requirements: string;
     benefits: string;
     description: string;
+    actionStatus: string;
+    offerStatus: string;
+    recruitmentStatus: string;
 }

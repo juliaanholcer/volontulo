@@ -46,10 +46,12 @@ class OfferSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = models.Offer
         fields = (
+            'action_status',
             'finished_at',
             'id',
             'image',
             'location',
+            'offer_status',
             'organization',
             'slug',
             'started_at',
@@ -57,10 +59,11 @@ class OfferSerializer(serializers.HyperlinkedModelSerializer):
             'url',
             'description',
             'benefits',
+            'recruitment_end_date',
+            'recruitment_status',
             'requirements',
             'time_commitment',
             'time_period',
-            'recruitment_end_date',
         )
 
     def get_image(self, obj):

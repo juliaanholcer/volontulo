@@ -7,7 +7,8 @@
   (contact)="onContact($event)"
   [contactStatus]="contactStatus$ | async">
 </volontulo-organization-contact>
-<volontulo-organization-offers-list *ngIf="offers$ | async as offers"
-  [offers]="offers"
+<volontulo-organization-offers-list
+  [user]="user$| async"
+  [offers]="offers$ | async"
   [isUserOrgMember]="isUserOrgMember$ | async">
 </volontulo-organization-offers-list>

@@ -22,11 +22,12 @@
       </td>
       <td>
         <span class="badge badge-warning">{{ offer.offerStatus }}</span>
+        <br>
         <span class="badge badge-info">{{ offer.actionStatus }}</span>
       </td>
       <td>
         <a
-          *ngIf="!isUserOrgMember && offer.actionStatus !== 'finished'"
+          *ngIf="!user?.isAdministrator && !isUserOrgMember && offer.actionStatus !== 'finished'"
           [routerLink]="['/offers', offer.slug, offer.id]"
           class="btn btn-primary"
         >

@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { Organization, OrganizationContactPayload } from './organization.model';
 import { ContactStatus } from './organization.interfaces';
+import { Offer } from '../homepage-offer/offers.model';
 import { environment } from '../../environments/environment';
 
 @Injectable()
@@ -14,10 +15,12 @@ export class OrganizationService {
   private contactStatusEvent = new BehaviorSubject<ContactStatus | null>(null);
   private organizationEvent = new BehaviorSubject<Organization | null>(null);
   private organizationsEvent = new BehaviorSubject<Organization[] | null>(null);
+  private offersEvent = new BehaviorSubject<Offer[] | null>(null);
 
   public contactStatus$: Observable<ContactStatus | null> = this.contactStatusEvent.asObservable();
   public organization$: Observable<Organization | null> = this.organizationEvent.asObservable();
   public organizations$: Observable<Organization[] | null> = this.organizationsEvent.asObservable();
+  public offers$: Observable<Offer[] | null> = this.offersEvent.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -54,5 +57,10 @@ export class OrganizationService {
   getOrganizations() {
     return this.http.get<Organization[]>(this.url)
       .subscribe(organizations => this.organizationsEvent.next(organizations));
+  }
+
+  getOffersForOrganization(id: number) {
+    return this.http.get<Offer[]>(`${this.url}/${id}/offers/`)
+      .subscribe(offers => this.offersEvent.next(offers));
   }
 }

@@ -20,7 +20,7 @@ export class OrganizationComponent implements OnInit {
   user$: Observable<User | null>;
   organization$: Observable<Organization>;
   contactStatus$: Observable<ContactStatus>;
-  offers: Offer[];
+  offers$: Observable<Offer[]>;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -30,11 +30,14 @@ export class OrganizationComponent implements OnInit {
 
   ngOnInit() {
     this.user$ = this.authService.user$;
-
     this.organization$ = this.organizationService.organization$;
+    this.offers$ = this.organizationService.offers$;
 
     this.activatedRoute.params.subscribe(
-      params => this.organizationService.getOrganization(params.organizationId)
+      params => {
+        this.organizationService.getOrganization(params.organizationId);
+        this.organizationService.getOffersForOrganization(params.organizationId);
+      }
     );
 
     this.isUserOrgMember$ = this.organization$

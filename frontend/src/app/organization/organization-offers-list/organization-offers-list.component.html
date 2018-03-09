@@ -1,46 +1,43 @@
 <div class="container" *ngIf="offers; else noOffers;">
   <table class="table table-striped mt-3">
-    <thead>
-      <tr>
-        <th scope="col"></th>
-        <th scope="col">Tytuł</th>
-        <th scope="col">Miejsce</th>
-        <th scope="col">Czas obowiązywania</th>
-        <th scope="col">Status</th>
-        <th scope="col" ></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let offer of offers">
-        <td>
-          <a class="" [routerLink]="['/offers', offer.slug, offer.id]">
-            <img class="rounded-circle" src="{{ offer.image }}" alt="Image for {{ offer.slug }}" />
-          </a>
-        </td>
-        <td>
-          <a [routerLink]="['/offers', offer.slug, offer.id]">Title</a>
-        </td>
-        <td>
-          <p>location</p>
-        </td>
-        <td>
-          <div>
-            <span> Od {{ offer.startedAt ? (offer.startedAt | date: 'dd MMMM yyyy, hh:mm'): 'teraz' }} </span>
-      &nbsp;     <span> do {{ offer.finishedAt ? (offer.finishedAt | date: 'dd MMMM yyyy, hh:mm'): 'ustalenia' }}</span>
-          </div>
-        </td>
-        <td>
-          <div>
-            <span class="badge badge-warning">status</span>
-            <span class="badge badge-warning">???</span>
-          </div>
-        </td>
-        <td class="text-right">
-          <a [routerLink]="['/offers', offer.slug, offer.id]" class="btn btn-primary">Włącz się</a>
-          <a [routerLink]="[environment.djangoRoot,'offers', offer.slug, offer.id, 'edit']" class="btn btn-info">Edytuj</a>
-        </td>
-      </tr>
-    </tbody>
+    <tr>
+      <th></th>
+      <th>Tytuł</th>
+      <th>Miejsce</th>
+      <th>Czas obowiązywania</th>
+      <th>Status</th>
+      <th></th>
+    </tr>
+    <tr *ngFor="let offer of offers">
+      <td>
+        <a class="crop-circle" [routerLink]="['/offers', offer.slug, offer.id]">
+          <img src="{{ offer.image }}" alt="{{ offer.image ? offer.title : ''}}">
+        </a>
+      </td>
+      <td> <a [routerLink]="['/offers', offer.slug, offer.id]">{{ offer.title }}</a></td>
+      <td> {{ offer.location }}</td>
+      <td>
+        Od {{ offer.startedAt ? (offer.startedAt | date: 'dd MMMM yyyy, hh:mm') : 'teraz' }}
+        do {{ offer.finishedAt ? (offer.finishedAt | date: 'dd MMMM yyyy, hh:mm') : 'ustalenia' }}
+      </td>
+      <td><span class="badge badge-warning">status</span></td>
+      <td>
+        <a
+          *ngIf="!isUserOrgMember"
+          [routerLink]="['/offers', offer.slug, offer.id]"
+          class="btn btn-primary"
+        >
+          Włącz się
+        </a>
+        <a
+          *ngIf="isUserOrgMember"
+          href="{{ djangoRoot }}/offers/{{ offer.slug }}/{{ offer.id }}/edit"
+          class="btn btn-info"
+        >
+          Edytuj
+        </a>
+      </td>
+    </tr>
   </table>
 </div>
 <ng-template #noOffers>

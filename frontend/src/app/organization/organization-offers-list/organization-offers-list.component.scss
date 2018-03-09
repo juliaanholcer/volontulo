@@ -1,1 +1,22 @@
 @import '~bootstrap/scss/bootstrap-grid';
+$mediumgray-light:            #CCD1D9 !default;
+
+.crop-circle {
+  padding: 10px;
+  display: block;
+  overflow: hidden;
+  position: relative;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  img {
+    position: absolute;
+    transform: translate(-25%, -50%);
+    width: 200%;
+    top: 50%;
+    &[alt=""] {
+      height: 100%;
+      background: $mediumgray-light;
+    }
+  }
+}

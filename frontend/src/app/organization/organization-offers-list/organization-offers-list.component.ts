@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { Offer } from "../../homepage-offer/offers.model";
+import { Offer } from '../../homepage-offer/offers.model';
 import { environment } from '../../../environments/environment';
 
 @Component({

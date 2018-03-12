@@ -60,7 +60,6 @@ class OfferSerializer(serializers.HyperlinkedModelSerializer):
             'description',
             'benefits',
             'recruitment_end_date',
-            'recruitment_status',
             'requirements',
             'time_commitment',
             'time_period',

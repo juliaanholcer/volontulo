@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
+import { Subject } from "rxjs/Subject";
 
 import { Organization, OrganizationContactPayload } from './organization.model';
 import { ContactStatus } from './organization.interfaces';
@@ -15,7 +16,7 @@ export class OrganizationService {
   private contactStatusEvent = new BehaviorSubject<ContactStatus | null>(null);
   private organizationEvent = new BehaviorSubject<Organization | null>(null);
   private organizationsEvent = new BehaviorSubject<Organization[] | null>(null);
-  private offersEvent = new BehaviorSubject<Offer[] | null>(null);
+  private offersEvent = new Subject<Offer[]>();
 
   public contactStatus$: Observable<ContactStatus | null> = this.contactStatusEvent.asObservable();
   public organization$: Observable<Organization | null> = this.organizationEvent.asObservable();

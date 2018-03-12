@@ -27,7 +27,7 @@
       </td>
       <td>
         <a
-          *ngIf="!user?.isAdministrator && !isUserOrgMember && offer.actionStatus !== 'finished'"
+          *ngIf="!isUserOrgMember && offer.actionStatus !== 'finished'"
           [routerLink]="['/offers', offer.slug, offer.id]"
           class="btn btn-primary"
         >

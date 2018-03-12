@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
-import { Subject } from "rxjs/Subject";
+import { Subject } from 'rxjs/Subject';
 
 import { Organization, OrganizationContactPayload } from './organization.model';
 import { ContactStatus } from './organization.interfaces';

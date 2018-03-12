@@ -59,10 +59,10 @@ class OfferSerializer(serializers.HyperlinkedModelSerializer):
             'url',
             'description',
             'benefits',
-            'recruitment_end_date',
             'requirements',
             'time_commitment',
             'time_period',
+            'recruitment_end_date',
         )
 
     def get_image(self, obj):

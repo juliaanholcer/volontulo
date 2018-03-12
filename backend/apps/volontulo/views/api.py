@@ -206,7 +206,12 @@ class OrganizationViewSet(viewsets.ModelViewSet):
     def offers(request, pk):
         """ Endpoint to get offers for organization """
         organization = get_object_or_404(Organization, id=pk)
-        if logged_as_admin(request) or [up for up in organization.userprofiles.all() if request.user == up.user]:
+        user = request.user
+        is_user_org_member = False
+        for userprofile in organization.userprofiles.all():
+            if user == userprofile.user:
+                is_user_org_member = True
+        if logged_as_admin(request) or is_user_org_member:
             offers = organization.offer_set.get_for_administrator()
         else:
             offers = organization.offer_set.get_weightened()

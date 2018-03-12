@@ -205,7 +205,6 @@ class OrganizationViewSet(viewsets.ModelViewSet):
     # pylint: disable=invalid-name
     def offers(request, pk):
         """ Endpoint to get offers for organization """
-        import pdb; pdb.set_trace();
         organization = get_object_or_404(Organization, id=pk)
         if logged_as_admin(request) or [up for up in organization.userprofiles.all() if request.user == up.user]:
             offers = organization.offer_set.get_for_administrator()

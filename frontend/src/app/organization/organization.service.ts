@@ -8,6 +8,7 @@ import { Subject } from 'rxjs/Subject';
 import { Organization, OrganizationContactPayload } from './organization.model';
 import { ContactStatus } from './organization.interfaces';
 import { Offer } from '../homepage-offer/offers.model';
+import { loadDefaultImage } from '../homepage-offer/offer.utils';
 import { environment } from '../../environments/environment';
 
 @Injectable()
@@ -22,7 +23,7 @@ export class OrganizationService {
   public contactStatus$: Observable<ContactStatus | null> = this.contactStatusEvent.asObservable();
   public organization$: Observable<Organization | null> = this.organizationEvent.asObservable();
   public organizations$: Observable<Organization[] | null> = this.organizationsEvent.asObservable();
-  public offers$: Observable<Offer[] | null> = this.offersEvent.asObservable();
+  public offers$: Observable<Offer[]> = this.offersEvent.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -62,7 +63,8 @@ export class OrganizationService {
   }
 
   getOffersForOrganization(id: number) {
-    return this.http.get<Offer[]>(`${this.url}/${id}/offers/`)
+    return this.http.get<Offer[]>(`${this.url}${id}/offers/`)
+      .map(offers => offers.map(offer => loadDefaultImage(offer)))
       .subscribe(offers => this.offersEvent.next(offers));
   }
 }

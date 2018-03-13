@@ -1,4 +1,4 @@
-<div class="container" *ngIf="offers; else noOffers;">
+<div class="container" *ngIf="offers.length; else noOffers;">
   <table class="table table-striped mt-3">
     <tr>
       <th></th>
@@ -10,9 +10,12 @@
     </tr>
     <tr *ngFor="let offer of offers">
       <td>
-        <a class="crop-circle" [routerLink]="['/offers', offer.slug, offer.id]">
-          <img src="{{ offer.image }}" alt="{{ offer.image ? offer.title : ''}}">
+        <a class="volontulo-link-circle" [routerLink]="['/offers', offer.slug, offer.id]"
+            [style.backgroundImage]="'url(' + offer.image +')'">
         </a>
+        <!--<a class="crop-circle" [routerLink]="['/offers', offer.slug, offer.id]">-->
+          <!--<img src="{{ offer.image }}" alt="{{ offer.image ? offer.title : ''}}">-->
+        <!--</a>-->
       </td>
       <td> <a [routerLink]="['/offers', offer.slug, offer.id]">{{ offer.title }}</a></td>
       <td> {{ offer.location }}</td>

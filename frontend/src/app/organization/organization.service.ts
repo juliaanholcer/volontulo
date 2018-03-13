@@ -12,7 +12,8 @@ import { environment } from '../../environments/environment';
 
 @Injectable()
 export class OrganizationService {
-  url = `${environment.apiRoot}/organizations`;
+  private url = `${environment.apiRoot}/organizations/`;
+
   private contactStatusEvent = new BehaviorSubject<ContactStatus | null>(null);
   private organizationEvent = new BehaviorSubject<Organization | null>(null);
   private organizationsEvent = new BehaviorSubject<Organization[] | null>(null);
@@ -26,13 +27,13 @@ export class OrganizationService {
   constructor(private http: HttpClient) { }
 
   getOrganization(id: number) {
-    return this.http.get<Organization>(`${this.url}/${id}/`)
+    return this.http.get<Organization>(`${this.url}${id}/`)
       .subscribe(organization => this.organizationEvent.next(organization));
   }
 
   sendContactForm(organization: Organization, contactData: OrganizationContactPayload) {
     this.http.post(
-      `${environment.apiRoot}/organizations/${organization.id}/contact/`,
+      `${this.url}${organization.id}/contact/`,
       contactData,
       { observe: 'response' })
       .subscribe(

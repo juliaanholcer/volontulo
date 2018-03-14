@@ -17,5 +17,4 @@ export class Offer {
     description: string;
     actionStatus: string;
     offerStatus: string;
-    recruitmentStatus: string;
 }

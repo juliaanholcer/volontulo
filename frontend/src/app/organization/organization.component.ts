@@ -50,7 +50,7 @@ export class OrganizationComponent implements OnInit {
         })
       );
 
-    this.contactStatus$ = this.organizationService.contactStatus$.pipe(skip(1));
+    this.contactStatus$ = this.organizationService.contactStatus$;
   }
 
   onContact(organizationContact: OrganizationContactPayload) {

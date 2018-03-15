@@ -13,9 +13,6 @@
         <a class="volontulo-link-circle" [routerLink]="['/offers', offer.slug, offer.id]"
             [style.backgroundImage]="'url(' + offer.image +')'">
         </a>
-        <!--<a class="crop-circle" [routerLink]="['/offers', offer.slug, offer.id]">-->
-          <!--<img src="{{ offer.image }}" alt="{{ offer.image ? offer.title : ''}}">-->
-        <!--</a>-->
       </td>
       <td> <a [routerLink]="['/offers', offer.slug, offer.id]">{{ offer.title }}</a></td>
       <td> {{ offer.location }}</td>

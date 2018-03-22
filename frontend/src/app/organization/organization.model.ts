@@ -6,6 +6,11 @@ export interface Organization {
   name: string;
   url: string;
 }
+export interface NewOrganization {
+  address: string;
+  description: string;
+  name: string;
+}
 
 export interface OrganizationContactPayload {
   name: string;

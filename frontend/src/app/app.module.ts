@@ -12,6 +12,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule, HttpClientXsrfModule } from '@angu
 import { environment } from '../environments/environment';
 import { OffersService } from './homepage-offer/offers.service';
 import { AppComponent } from './app.component';
+import { OrganizationCreateComponent } from './organization/organization-create/organization-create.component';
 import { RedirectComponent } from './redirect.component';
 import { WindowFactory, WindowService } from './window.service';
 import { OrganizationService } from './organization/organization.service';
@@ -55,8 +56,16 @@ const appRoutes: Routes = [
     component: HomePageComponent
   },
   {
+    path: 'organizations/:organizationSlug/:organizationId/edit',
+    component: OrganizationCreateComponent,
+  },
+  {
     path: 'organizations/:organizationSlug/:organizationId',
     component: OrganizationComponent,
+  },
+  {
+    path: 'organizations/create',
+    component: OrganizationCreateComponent,
   },
   {
     path: 'faq-organizations',
@@ -133,6 +142,7 @@ registerLocaleData(localePl);
     PasswordResetConfirmComponent,
     MessagesComponent,
     OrganizationOffersListComponent,
+    OrganizationCreateComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'volontulo' }),

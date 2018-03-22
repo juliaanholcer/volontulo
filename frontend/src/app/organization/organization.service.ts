@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 
-import { Organization, OrganizationContactPayload } from './organization.model';
+import { NewOrganization, Organization, OrganizationContactPayload } from './organization.model';
 import { ContactStatus } from './organization.interfaces';
 import { Offer } from '../homepage-offer/offers.model';
 import { loadDefaultImage } from '../homepage-offer/offer.utils';
@@ -48,7 +48,12 @@ export class OrganizationService {
         err => this.contactStatusEvent.next({ data: contactData, status: 'error' }),
       );
   }
-
+  createOrganization(newOrganization: NewOrganization) {
+    return this.http.post(this.url, newOrganization);
+  }
+  editOrganization(id: number, newOrganization: NewOrganization) {
+    return this.http.put(`${this.url}${id}/`, newOrganization);
+  }
   getOrganizationViewUrl(organization: Organization): string {
     return `${environment.djangoRoot}/organizations/${organization.slug}/${organization.id}`;
   }

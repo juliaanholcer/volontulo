@@ -14,6 +14,7 @@ from rest_framework.exceptions import PermissionDenied
 from rest_framework.fields import CharField, EmailField
 
 from apps.volontulo import models
+from apps.volontulo.models import Organization
 
 
 class OrganizationSerializer(serializers.HyperlinkedModelSerializer):
@@ -37,6 +38,11 @@ class OrganizationSerializer(serializers.HyperlinkedModelSerializer):
     def get_slug(obj):
         """Returns slugified name."""
         return slugify(obj.name)
+
+    def create(self, validated_data):
+        org = Organization.objects.create(**validated_data)
+        org.userprofiles.add(self.context['request'].user.userprofile)
+        return org
 
 
 class OrganizationField(serializers.Field):

@@ -21,3 +21,7 @@ class TestOrganizationSerializer(TestCase):
             OrganizationSerializer().get_slug(organization),
             'organization-name-123',
         )
+
+    def test_create(self):
+        """Test create method"""
+        pass

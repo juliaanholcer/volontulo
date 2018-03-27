@@ -40,6 +40,7 @@ class OrganizationSerializer(serializers.HyperlinkedModelSerializer):
         return slugify(obj.name)
 
     def create(self, validated_data):
+        """Adds created organization to user's organizations list"""
         org = Organization.objects.create(**validated_data)
         org.userprofiles.add(self.context['request'].user.userprofile)
         return org

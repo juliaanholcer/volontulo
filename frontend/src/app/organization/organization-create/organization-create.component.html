@@ -1,4 +1,7 @@
 <div class="container">
+  <ngb-alert type="warning" *ngIf="message" (close)="message = ''">
+    {{ message }}
+  </ngb-alert>
   <h2 class="mb-4">{{ inEditMode ? 'Edytuj' : 'Utwórz' }} organizację</h2>
   <form (ngSubmit)="onSubmit()" [formGroup]="createForm">
     <div class="form-group row">

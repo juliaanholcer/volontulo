@@ -1,10 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
 import { Organization } from '../organization.model';
-import { OrganizationService } from "../organization.service";
+import { OrganizationService } from '../organization.service';
 
 @Component({
   selector: 'volontulo-organization-create',
@@ -15,7 +15,7 @@ export class OrganizationCreateComponent implements OnInit {
   createForm: FormGroup;
   id: number;
   inEditMode: boolean = false;
-  organization$: Observable<Organization>;
+  message: string = '';
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -25,7 +25,6 @@ export class OrganizationCreateComponent implements OnInit {
     ) {}
 
   ngOnInit() {
-    this.organization$ = this.organizationService.organization$;
     this.createForm = this.fb.group({
        'name': this.fb.control(null, Validators.required),
        'address': this.fb.control(null, Validators.required),
@@ -37,19 +36,31 @@ export class OrganizationCreateComponent implements OnInit {
           this.inEditMode = true;
           this.id = params.organizationId;
           this.organizationService.getOrganization(params.organizationId);
+          this.organizationService.organization$
+            .subscribe((organization: Organization) => {
+            this.createForm.patchValue(organization);
+          });
         }
     });
+    this.organizationService.createStatus$
+      .subscribe(
+        (response) => {
+          if (response.status === 'success') {
+            this.router.navigate(['/organizations', response.data.slug, response.data.id]);
+          } else {
+            // message cen be changed after new messages service will be introduce PR #886
+            this.message = response.data.detail;
+          }
+        });
   }
   onSubmit() {
     if (this.inEditMode) {
-      this.organizationService.editOrganization(this.id, this.createForm.value)
-        .subscribe();
+      this.organizationService.editOrganization(this.id, this.createForm.value);
     } else {
-      this.organizationService.createOrganization(this.createForm.value)
-        .subscribe();
+      this.organizationService.createOrganization(this.createForm.value);
     }
-    //this.router.navigate(['/organizations', 'slug', this.id])
   }
+
   isFormInputInvalid(inputStringId: string): boolean {
     return this.createForm.get(inputStringId).invalid && this.createForm.get(inputStringId).touched;
   }

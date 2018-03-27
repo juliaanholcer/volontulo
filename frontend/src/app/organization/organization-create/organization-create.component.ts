@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from "../../auth.service";
 
 import { Organization } from '../organization.model';
 import { OrganizationService } from '../organization.service';
@@ -13,10 +14,11 @@ import { OrganizationService } from '../organization.service';
 export class OrganizationCreateComponent implements OnInit {
   createForm: FormGroup;
   id: number;
-  inEditMode: boolean = false;
-  message: string = '';
+  inEditMode = false;
+  message = '';
 
   constructor(
+    private authService: AuthService,
     private activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
     private organizationService: OrganizationService,
@@ -45,6 +47,7 @@ export class OrganizationCreateComponent implements OnInit {
       .subscribe(
         (response) => {
           if (response.status === 'success') {
+            this.authService.getCurrentUser();
             this.router.navigate(['/organizations', response.data.slug, response.data.id]);
           } else {
             this.message = response.data.detail;

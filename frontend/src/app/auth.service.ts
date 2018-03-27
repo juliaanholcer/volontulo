@@ -32,6 +32,10 @@ export class AuthService {
     private http: HttpClient,
     private router: Router,
   ) {
+    this.getCurrentUser();
+  }
+
+  getCurrentUser() {
     this.http.get<User>(this.currentUserUrl)
       .subscribe(user => {
         if (user.username) {

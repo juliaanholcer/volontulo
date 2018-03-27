@@ -6,6 +6,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { OrganizationService } from '../organization.service';
 import { OrganizationCreateComponent } from './organization-create.component';
+import { AuthService } from '../../auth.service';
 
 describe('OrganizationCreateComponent', () => {
   let component: OrganizationCreateComponent;
@@ -20,7 +21,7 @@ describe('OrganizationCreateComponent', () => {
       ],
       declarations: [ OrganizationCreateComponent ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      providers: [ OrganizationService ],
+      providers: [ OrganizationService, AuthService ],
     })
     .compileComponents();
   }));

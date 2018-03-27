@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
 
 import { Organization } from '../organization.model';
 import { OrganizationService } from '../organization.service';
@@ -48,7 +47,6 @@ export class OrganizationCreateComponent implements OnInit {
           if (response.status === 'success') {
             this.router.navigate(['/organizations', response.data.slug, response.data.id]);
           } else {
-            // message cen be changed after new messages service will be introduce PR #886
             this.message = response.data.detail;
           }
         });

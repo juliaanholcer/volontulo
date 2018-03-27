@@ -44,7 +44,7 @@ class TestAdminUserOrganizationsCreateAPIView(_TestOrganizationsCreateAPIView):
             content_type='application/json',
         )
 
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
 
 class TestOrganizationUserOrganizationsCreateAPIView(
@@ -71,7 +71,7 @@ class TestOrganizationUserOrganizationsCreateAPIView(
             content_type='application/json',
         )
 
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
 
 class TestRegularUserOrganizationsCreateAPIView(

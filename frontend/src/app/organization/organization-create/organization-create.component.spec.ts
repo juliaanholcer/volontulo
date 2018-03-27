@@ -1,6 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { async, TestBed, inject, ComponentFixture } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { async, TestBed, ComponentFixture } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { OrganizationService } from '../organization.service';
@@ -9,16 +10,16 @@ import { OrganizationCreateComponent } from './organization-create.component';
 describe('OrganizationCreateComponent', () => {
   let component: OrganizationCreateComponent;
   let fixture: ComponentFixture<OrganizationCreateComponent>;
-  let organizationService: OrganizationService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
        imports: [
-        FormsModule,
+        ReactiveFormsModule,
         HttpClientTestingModule,
         RouterTestingModule,
       ],
       declarations: [ OrganizationCreateComponent ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [ OrganizationService ],
     })
     .compileComponents();
@@ -29,10 +30,6 @@ describe('OrganizationCreateComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-
-  beforeEach(inject([OrganizationService], (_organizationsService) => {
-    organizationService = _organizationsService;
-  }));
 
   it('should create', () => {
     expect(component).toBeTruthy();

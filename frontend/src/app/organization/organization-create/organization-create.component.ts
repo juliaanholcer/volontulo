@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from "../../auth.service";
+import { switchMap, tap } from 'rxjs/operators';
+import { Subscription } from 'rxjs/Subscription';
 
+import { AuthService } from '../../auth.service';
 import { Organization } from '../organization.model';
 import { OrganizationService } from '../organization.service';
 
@@ -11,11 +13,12 @@ import { OrganizationService } from '../organization.service';
   templateUrl: './organization-create.component.html',
   styleUrls: ['./organization-create.component.scss']
 })
-export class OrganizationCreateComponent implements OnInit {
+export class OrganizationCreateComponent implements OnInit, OnDestroy {
   createForm: FormGroup;
   id: number;
   inEditMode = false;
   message = '';
+  statusSubscription: Subscription;
 
   constructor(
     private authService: AuthService,
@@ -31,19 +34,23 @@ export class OrganizationCreateComponent implements OnInit {
        'address': this.fb.control(null, Validators.required),
        'description': this.fb.control(null, Validators.required),
       });
-    this.activatedRoute.params.subscribe(
-      params => {
-        if (params.organizationId) {
-          this.inEditMode = true;
-          this.id = params.organizationId;
-          this.organizationService.getOrganization(params.organizationId);
-          this.organizationService.organization$
-            .subscribe((organization: Organization) => {
-            this.createForm.patchValue(organization);
-          });
-        }
-    });
-    this.organizationService.createStatus$
+
+    this.activatedRoute.params
+      .pipe(
+        tap(params => {
+          if (params.organizationId) {
+            this.inEditMode = true;
+            this.id = params.organizationId;
+            this.organizationService.getOrganization(params.organizationId);
+          }
+        }),
+        switchMap(() => this.organizationService.organization$)
+      )
+      .subscribe(
+        (organization: Organization) => this.createForm.patchValue(organization)
+      );
+
+    this.statusSubscription = this.organizationService.createStatus$
       .subscribe(
         (response) => {
           if (response.status === 'success') {
@@ -54,6 +61,7 @@ export class OrganizationCreateComponent implements OnInit {
           }
         });
   }
+
   onSubmit() {
     if (this.inEditMode) {
       this.organizationService.editOrganization(this.id, this.createForm.value);
@@ -64,5 +72,9 @@ export class OrganizationCreateComponent implements OnInit {
 
   isFormInputInvalid(inputStringId: string): boolean {
     return this.createForm.get(inputStringId).invalid && this.createForm.get(inputStringId).touched;
+  }
+
+  ngOnDestroy() {
+    this.statusSubscription.unsubscribe();
   }
 }

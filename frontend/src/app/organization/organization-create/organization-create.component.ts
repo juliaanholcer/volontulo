@@ -5,6 +5,7 @@ import { switchMap, tap } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
 
 import { AuthService } from '../../auth.service';
+import { User } from "../../user";
 import { Organization } from '../organization.model';
 import { OrganizationService } from '../organization.service';
 
@@ -18,7 +19,9 @@ export class OrganizationCreateComponent implements OnInit, OnDestroy {
   id: number;
   inEditMode = false;
   message = '';
-  statusSubscription: Subscription;
+  createSubscription: Subscription;
+  userSubscription: Subscription;
+  user: User;
 
   constructor(
     private authService: AuthService,
@@ -29,6 +32,10 @@ export class OrganizationCreateComponent implements OnInit, OnDestroy {
     ) {}
 
   ngOnInit() {
+    this.userSubscription = this.authService.user$.subscribe(
+      (user: User) => { this.user = user }
+    );
+
     this.createForm = this.fb.group({
        'name': this.fb.control(null, Validators.required),
        'address': this.fb.control(null, Validators.required),
@@ -50,11 +57,15 @@ export class OrganizationCreateComponent implements OnInit, OnDestroy {
         (organization: Organization) => this.createForm.patchValue(organization)
       );
 
-    this.statusSubscription = this.organizationService.createStatus$
+    this.createSubscription = this.organizationService.createStatus$
       .subscribe(
         (response) => {
           if (response.status === 'success') {
-            this.authService.getCurrentUser();
+            if (!this.inEditMode) {
+              const newUser = Object.assign({}, this.user);
+              newUser.organizations.push(response.data);
+              this.authService.setCurrentUser(newUser);
+            }
             this.router.navigate(['/organizations', response.data.slug, response.data.id]);
           } else {
             this.message = response.data.detail;
@@ -75,6 +86,6 @@ export class OrganizationCreateComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.statusSubscription.unsubscribe();
+    this.createSubscription.unsubscribe();
   }
 }

@@ -50,31 +50,24 @@ export class OrganizationService {
         err => this.contactStatusEvent.next({ data: contactData, status: 'error' }),
       );
   }
+
   createOrganization(newOrganization: Organization) {
-    this.http.post(this.url, newOrganization, { observe: 'response' })
-    .subscribe(
-        (response: HttpResponse<any>) => {
-        if (response.status === 201) {
-            this.createOrganizationEvent.next({ data: response.body, status: 'success' });
-          } else {
-            this.createOrganizationEvent.next({ data: response.body, status: 'error' });
-          }
+    this.http.post(this.url, newOrganization)
+      .subscribe(
+        (data: HttpResponse<Organization>) => {
+          this.createOrganizationEvent.next({data, status:'success'});
         },
-        error => this.createOrganizationEvent.next({ data: error.error, status: 'error' })
-      );
+        error => {this.createOrganizationEvent.next({ data: error, status: 'error'})
+        });
   }
   editOrganization(id: number, updatedOrganization: Organization) {
-    this.http.put(`${this.url}${id}/`, updatedOrganization, { observe: 'response' })
-      .subscribe(
-        (response: HttpResponse<any>) => {
-        if (response.status === 200) {
-            this.createOrganizationEvent.next({ data: response.body, status: 'success' });
-          } else {
-            this.createOrganizationEvent.next({ data: response.body, status: 'error' });
-          }
+    this.http.put(`${this.url}${id}/`, updatedOrganization)
+      .subscribe( (data: HttpResponse<Organization>) => {
+          this.createOrganizationEvent.next({data, status:'success'});
         },
-        error => this.createOrganizationEvent.next({ data: error.error, status: 'error' })
-      );
+        error => {
+        this.createOrganizationEvent.next({ data: error.error, status: 'error'});
+      });
   }
   getOrganizationViewUrl(organization: Organization): string {
     return `${environment.djangoRoot}/organizations/${organization.slug}/${organization.id}`;

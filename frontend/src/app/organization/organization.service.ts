@@ -6,7 +6,7 @@ import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 
 import { Organization, OrganizationContactPayload } from './organization.model';
-import { ContactStatus } from './organization.interfaces';
+import { ContactStatus, CreateOrEditOrganization } from './organization.interfaces';
 import { Offer } from '../homepage-offer/offers.model';
 import { loadDefaultImage } from '../homepage-offer/offer.utils';
 import { environment } from '../../environments/environment';
@@ -19,13 +19,13 @@ export class OrganizationService {
   private organizationEvent = new BehaviorSubject<Organization | null>(null);
   private organizationsEvent = new Subject<Organization[]>();
   private offersEvent = new Subject<Offer[]>();
-  private createOrganizationEvent = new Subject<ContactStatus>();
+  private createOrganizationEvent = new Subject<CreateOrEditOrganization>();
 
   public contactStatus$: Observable<ContactStatus> = this.contactStatusEvent.asObservable();
   public organization$: Observable<Organization | null> = this.organizationEvent.asObservable();
   public organizations$: Observable<Organization[]> = this.organizationsEvent.asObservable();
   public offers$: Observable<Offer[]> = this.offersEvent.asObservable();
-  public createStatus$: Observable<ContactStatus> = this.createOrganizationEvent.asObservable();
+  public createOrEditOrganization$: Observable<CreateOrEditOrganization> = this.createOrganizationEvent.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -55,18 +55,18 @@ export class OrganizationService {
     this.http.post(this.url, newOrganization)
       .subscribe(
         (data: HttpResponse<Organization>) => {
-          this.createOrganizationEvent.next({data, status:'success'});
+          this.createOrganizationEvent.next({data, type: 'create'});
         },
-        error => {this.createOrganizationEvent.next({ data: error, status: 'error'})
+        error => {this.createOrganizationEvent.next({ data: error.error, type: 'error'})
         });
   }
   editOrganization(id: number, updatedOrganization: Organization) {
     this.http.put(`${this.url}${id}/`, updatedOrganization)
       .subscribe( (data: HttpResponse<Organization>) => {
-          this.createOrganizationEvent.next({data, status:'success'});
+          this.createOrganizationEvent.next({data, type: 'edit'});
         },
         error => {
-        this.createOrganizationEvent.next({ data: error.error, status: 'error'});
+        this.createOrganizationEvent.next({ data: error.error, type: 'error'});
       });
   }
   getOrganizationViewUrl(organization: Organization): string {

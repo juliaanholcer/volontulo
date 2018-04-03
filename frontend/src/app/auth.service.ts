@@ -42,7 +42,7 @@ export class AuthService {
       });
   }
 
-  setCurrentUser(user) {
+  setCurrentUser(user: User) {
     this.changeUserEvent.next(user);
   }
 

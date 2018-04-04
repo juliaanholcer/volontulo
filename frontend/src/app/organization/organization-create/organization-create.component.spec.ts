@@ -3,6 +3,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { UserService } from '../../user.service';
 
 import { OrganizationService } from '../organization.service';
 import { OrganizationCreateComponent } from './organization-create.component';
@@ -21,7 +22,7 @@ describe('OrganizationCreateComponent', () => {
       ],
       declarations: [ OrganizationCreateComponent ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      providers: [ OrganizationService, AuthService ],
+      providers: [ OrganizationService, AuthService, UserService ],
     })
     .compileComponents();
   }));

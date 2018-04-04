@@ -14,6 +14,7 @@ import { OffersService } from './homepage-offer/offers.service';
 import { AppComponent } from './app.component';
 import { OrganizationCreateComponent } from './organization/organization-create/organization-create.component';
 import { RedirectComponent } from './redirect.component';
+import { UserService } from './user.service';
 import { WindowFactory, WindowService } from './window.service';
 import { OrganizationService } from './organization/organization.service';
 import { OrganizationDetailsComponent } from './organization/organization-details/organization-details.component';
@@ -62,6 +63,7 @@ const appRoutes: Routes = [
   {
     path: 'organizations/:organizationSlug/:organizationId',
     component: OrganizationComponent,
+
   },
   {
     path: 'organizations/create',
@@ -158,6 +160,7 @@ registerLocaleData(localePl);
     AuthService,
     OffersService,
     OrganizationService,
+    UserService,
     { provide: LOCALE_ID, useValue: 'pl' },
     { provide: WindowService, useFactory: WindowFactory, deps: [PLATFORM_ID] },
     { provide: ErrorHandler, useClass: RavenErrorHandler },

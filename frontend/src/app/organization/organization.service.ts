@@ -29,9 +29,12 @@ export class OrganizationService {
 
   constructor(private http: HttpClient) { }
 
-  getOrganization(id: number) {
+  getOrganization(id: number): Observable<Organization> {
     return this.http.get<Organization>(`${this.url}${id}/`)
-      .subscribe(organization => this.organizationEvent.next(organization));
+      .map(organization => {
+        this.organizationEvent.next(organization);
+        return organization;
+      });
   }
 
   sendContactForm(organization: Organization, contactData: OrganizationContactPayload) {

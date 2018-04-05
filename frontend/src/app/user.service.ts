@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable } from "rxjs/Observable";
-import { map, take } from "rxjs/operators";
+import { Observable } from 'rxjs/Observable';
+import { map, take } from 'rxjs/operators';
+
 import { AuthService } from './auth.service';
 import { Organization } from './organization/organization.model';
-import { User } from "./user";
+import { User } from './user';
 
 @Injectable()
 export class UserService {

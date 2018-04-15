@@ -108,8 +108,6 @@ urlpatterns = [
     # users/slug-id
     # users/slug-id/contact
 
-    # organizations' namespace:
-
     # organizations/filter
 
     url(

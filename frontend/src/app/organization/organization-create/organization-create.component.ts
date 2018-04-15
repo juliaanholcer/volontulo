@@ -19,7 +19,6 @@ import { OrganizationService } from '../organization.service';
 export class OrganizationCreateComponent implements OnInit, OnDestroy {
   createForm: FormGroup;
   id: number;
-  inEditMode = false;
   message = '';
   createSubscription: Subscription;
   organization$: Observable<Organization>;

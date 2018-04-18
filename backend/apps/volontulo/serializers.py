@@ -14,7 +14,6 @@ from rest_framework.exceptions import PermissionDenied
 from rest_framework.fields import CharField, EmailField
 
 from apps.volontulo import models
-from apps.volontulo.models import Organization
 
 
 class OrganizationSerializer(serializers.HyperlinkedModelSerializer):

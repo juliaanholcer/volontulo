@@ -1,6 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { FaqOrganizationsComponent } from './faq-organizations.component';
 
@@ -10,9 +10,8 @@ describe('FaqOrganizationsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [NgbModule],
+      imports: [ NgbAccordionModule.forRoot() ],
       declarations: [ FaqOrganizationsComponent ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })
     .compileComponents();
   }));

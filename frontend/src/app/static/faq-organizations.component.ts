@@ -32,7 +32,7 @@ zawierania porozumień z wolontariuszami, zwanych w ustawie korzystającymi. Są
     },
     {
       question: `Czy wolontariusz może działać na rzecz przedsiębiorców?`,
-      answer: `Podmioty, na rzecz których wolontariusz może wykonywać świadczenia zostały określone powyżej. Ponadto, ze względu na cel 
+      answer: `Podmioty, na rzecz których wolontariusz może wykonywać świadczenia zostały określone powyżej. Ponadto, ze względu na cel
       i charakter świadczeń wolontariuszy nie jest dopuszczalne, aby wykonywali oni świadczenia na rzecz przedsiębiorców i innych
       podmiotów prowadzących działalność gospodarczą. Wolontariusze nie powinni również zastępować pracowników a jedynie uzupełniać
       ich pracę.`,

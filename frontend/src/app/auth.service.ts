@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { map } from 'rxjs/operators';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 
@@ -10,7 +11,6 @@ import { environment } from '../environments/environment';
 import { User } from './user.d';
 import { deepFreeze } from './utils/object.utils';
 import { SuccessOrFailureAction } from './models';
-
 
 @Injectable()
 export class AuthService {
@@ -33,14 +33,20 @@ export class AuthService {
     private http: HttpClient,
     private router: Router,
   ) {
-    this.http.get<User>(this.currentUserUrl)
+    this.getUser()
       .subscribe(user => {
-        if (user.username) {
+        if (user) {
           this.changeUserEvent.next(deepFreeze(user));
         } else {
           this.changeUserEvent.next(null);
         }
       });
+  }
+
+  getUser(): Observable<User | null> {
+    return this.http.get<User>(this.currentUserUrl).pipe(
+      map(user => user.username ? user : null),
+    );
   }
 
   setCurrentUser(user: User) {

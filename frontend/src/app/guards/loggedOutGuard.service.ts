@@ -9,7 +9,7 @@ export class LoggedOutGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(): Observable<boolean>   {
-    return this.authService.getUser().pipe(
+    return this.authService.user$.pipe(
       tap(user => {
         if (user !== null) {
           this.router.navigate(['/']);

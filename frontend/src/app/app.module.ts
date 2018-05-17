@@ -110,10 +110,12 @@ const appRoutes: Routes = [
   {
     path: 'offers/create',
     component: CreateOfferComponent,
+    canActivate: [LoggedInGuard],
   },
   {
     path: 'offers/:offerSlug/:offerId/edit',
     component: CreateOfferComponent,
+    canActivate: [LoggedInGuard],
   },
   {
     path: 'organizations',

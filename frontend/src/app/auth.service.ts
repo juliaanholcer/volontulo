@@ -2,15 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { map } from 'rxjs/operators';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 
-import { environment } from '../environments/environment';
-import { User } from './user.d';
+import { User } from './user';
 import { deepFreeze } from './utils/object.utils';
 import { SuccessOrFailureAction } from './models';
+import { environment } from '../environments/environment';
 
 @Injectable()
 export class AuthService {
@@ -19,12 +19,12 @@ export class AuthService {
   private logoutUrl = `${environment.apiRoot}/logout/`;
   private resetPasswordUrl = `${environment.apiRoot}/password-reset/`;
 
-  private changeUserEvent = new BehaviorSubject<User | null>(null);
+  private changeUserEvent = new ReplaySubject<User>(1);
   private loginEvent = new Subject<SuccessOrFailureAction>();
   private resetPasswordEvent = new Subject<SuccessOrFailureAction>();
   private confirmResetPasswordEvent = new Subject<SuccessOrFailureAction>();
 
-  public user$: Observable<User | null> = this.changeUserEvent.asObservable();
+  public user$: Observable<User> = this.changeUserEvent.asObservable();
   public login$: Observable<SuccessOrFailureAction> = this.loginEvent.asObservable();
   public resetPassword$: Observable<SuccessOrFailureAction> = this.resetPasswordEvent.asObservable();
   public confirmResetPassword$: Observable<SuccessOrFailureAction> = this.confirmResetPasswordEvent.asObservable();

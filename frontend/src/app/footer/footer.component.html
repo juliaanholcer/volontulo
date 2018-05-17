@@ -16,7 +16,7 @@
         <h3 class="nav-title">Strefa organizacji i instytucji</h3>
         <ul class="nav list-unstyled flex-column">
           <li><a class="nav-link" href="{{ djangoRoot }}/register">Załóż konto</a></li>
-          <li><a class="nav-link" href="{{ djangoRoot }}/offers/create">Dodaj nową ofertę</a></li>
+          <li><a class="nav-link" [routerLink]="['offers', 'create']">Dodaj nową ofertę</a></li>
           <li class="nav-item"><a class="nav-link" [routerLink]="['/organizations']">Lista organizacji i instytucji</a></li>
           <li class="nav-item"><a class="nav-link" [routerLink]="['/faq-organizations']">FAQ dla organizacji i instytucji</a></li>
           <li class="nav-item"><a class="nav-link" [routerLink]="['/office']">Przyjdź na dyżur</a></li>
@@ -49,6 +49,10 @@
           <a target="_blank" href="http://wrk.org.pl/">
               <img class="img-fluid" src="assets/img/logo/logo-wrk.png"
                   alt="Logo WRK - Wielkopolska Rada Koordynacyjna Związek Organizacji Pozarządowych"></a>
+        </div>
+        <div class="col-3 ml-4 mr-4 px-0 text-center align-self-center">
+          <a target="_blank" href="https://codeforpoznan.pl/">
+            <img class="img-fluid" src="assets/img/logo/Code_for_Poznan_final_square.png" alt="Logo Code for Poznań"></a>
         </div>
         <div class="col-3 mr-auto ml-4 px-0 text-center align-self-center">
           <a target="_blank" href="http://stxnext.pl/">

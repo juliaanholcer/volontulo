@@ -19,12 +19,12 @@ export class AuthService {
   private logoutUrl = `${environment.apiRoot}/logout/`;
   private resetPasswordUrl = `${environment.apiRoot}/password-reset/`;
 
-  private changeUserEvent = new ReplaySubject<User>(1);
+  private changeUserEvent = new ReplaySubject<User | null>(1);
   private loginEvent = new Subject<SuccessOrFailureAction>();
   private resetPasswordEvent = new Subject<SuccessOrFailureAction>();
   private confirmResetPasswordEvent = new Subject<SuccessOrFailureAction>();
 
-  public user$: Observable<User> = this.changeUserEvent.asObservable();
+  public user$: Observable<User | null> = this.changeUserEvent.asObservable();
   public login$: Observable<SuccessOrFailureAction> = this.loginEvent.asObservable();
   public resetPassword$: Observable<SuccessOrFailureAction> = this.resetPasswordEvent.asObservable();
   public confirmResetPassword$: Observable<SuccessOrFailureAction> = this.confirmResetPasswordEvent.asObservable();

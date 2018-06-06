@@ -44,9 +44,7 @@ export class AuthService {
   }
 
   getUser(): Observable<User | null> {
-    return this.http.get<User>(this.currentUserUrl).pipe(
-      map(user => user.username ? user : null),
-    );
+    return this.http.get<User>(this.currentUserUrl);
   }
 
   setCurrentUser(user: User) {

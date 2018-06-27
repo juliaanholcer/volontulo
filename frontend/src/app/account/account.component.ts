@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { map, switchMap } from "rxjs/operators";
-import { pipe } from "rxjs/util/pipe";
-import { AuthService } from "../auth.service";
-import { Organization } from '../organization/organization.model';
+import { map } from 'rxjs/operators';
+
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'volontulo-account',
@@ -17,10 +16,7 @@ export class AccountComponent implements OnInit {
   ngOnInit() {
     this.organizations$ = this.authService.user$
       .pipe(
-        map(user => {
-          console.log(user.organizations)
-          return user.organizations
-        })
+        map(user => user.organizations)
       );
   }
 }

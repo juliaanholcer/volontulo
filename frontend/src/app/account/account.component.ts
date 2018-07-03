@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+
 import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
 
 import { AuthService } from '../auth.service';
+import { Organization } from '../organization/organization.model';
 
 @Component({
   selector: 'volontulo-account',
@@ -10,7 +12,9 @@ import { AuthService } from '../auth.service';
 })
 
 export class AccountComponent implements OnInit {
-  organizations$: Observable<any>;
+
+  organizations$: Observable<Organization[]>;
+
   constructor(private authService: AuthService) {}
 
   ngOnInit() {
